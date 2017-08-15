@@ -1,0 +1,13 @@
+﻿
+@inject IPostService postService
+<div>
+    @foreach (var post in postService.GetAll())
+    {
+
+        <h1>@post.Author.UserName</h1>
+        @post.Content;
+        <br />
+        <span>Lajki: @post.Likes;</span>
+        <br />
+    }
+</div>

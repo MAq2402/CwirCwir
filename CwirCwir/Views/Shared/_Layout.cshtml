@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Styles/StyleSheet.css" rel="stylesheet" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div>
+        <h1>ĆwirĆwir</h1>
+    </div>
+    <div>
+        @await Component.InvokeAsync("LoginLogout")
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+</body>
+</html>

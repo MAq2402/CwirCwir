@@ -1,0 +1,12 @@
+﻿@if(User.Identity.IsAuthenticated)
+{
+    <h3>Zalogowano, witaj @User.Identity.Name</h3>
+    <br />
+    <form asp-controller="Account" asp-action="Logout" asp-antiforgery="true" method="post">
+        <input type="submit" value="Wyloguj się" />
+    </form>
+}
+else
+{
+    <h3>Nie zalogowano, <a asp-controller="Account" asp-action="Register">zarejestruj się teraz</a></h3>
+}
