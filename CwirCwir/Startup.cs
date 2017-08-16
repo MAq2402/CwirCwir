@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using CwirCwir.Entities;
 using CwirCwir.Services;
+using CwirCwir.Middleware;
 
 namespace CwirCwir
 {
@@ -52,6 +53,8 @@ namespace CwirCwir
             }
 
             app.UseIdentity();
+
+            app.UseNodeModules();
 
             app.UseMvc(ConfigureRoutes);
 

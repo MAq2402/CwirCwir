@@ -1,15 +1,16 @@
 ﻿@{ 
     ViewBag.Title = "Witaj";
-    Layout = null;
 }
 <h1>Witaj na Cwir Cwir</h1>
 <div>
-    <form asp-controller="Account" asp-action="Login">
+    <a asp-controller="Account" asp-action="Login">Zaloguj się</a>
+     <!--<form asp-controller="Account" asp-action="Login" method="post">
         <input type="submit" value="Zaloguj się" />
-     </form>
+     </form>-->
 </div>
 <div>
-    <form>
+    <a asp-controller="Account" asp-action="Register">Zarejestruj się</a>
+    <!--<form asp-controller="Account" asp-action="Register" method="post">
         <input type="submit" value="Zarejestruj się" />
-    </form>
+    </form>-->
 </div>
