@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using CwirCwir.Entities;
 using CwirCwir.Services;
 using CwirCwir.Middleware;
+using Microsoft.AspNetCore.Identity;
 
 namespace CwirCwir
 {
@@ -52,7 +53,7 @@ namespace CwirCwir
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseIdentity();
+            app.UseAuthentication();
 
             app.UseNodeModules();
 
