@@ -55,6 +55,8 @@ namespace CwirCwir
 
             app.UseAuthentication();
 
+            app.UseStaticFiles();
+
             app.UseNodeModules(env.ContentRootPath);
 
             app.UseMvc(ConfigureRoutes);

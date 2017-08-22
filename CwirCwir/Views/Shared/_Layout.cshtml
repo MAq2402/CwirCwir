@@ -3,13 +3,12 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <link href="/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />   
     <title>@ViewBag.Title</title>
+    @RenderSection("Styles", required: false)
+    @RenderSection("Scripts", required: false)
 </head>
 <body>
-    <div>
-        <h1>ĆwirĆwir</h1>
-    </div>
     <!--<div>
         //await Component.InvokeAsync("LoginLogout")
     </div>-->

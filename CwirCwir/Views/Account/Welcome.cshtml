@@ -1,16 +1,24 @@
 ﻿@{ 
     ViewBag.Title = "Witaj";
 }
+@section Styles
+{
+    <link rel="stylesheet" href="~/Styles/Account-Welcome.css" />
+}
 <h1>Witaj na Cwir Cwir</h1>
-<div>
-    <a asp-controller="Account" asp-action="Login">Zaloguj się</a>
-     <!--<form asp-controller="Account" asp-action="Login" method="post">
-        <input type="submit" value="Zaloguj się" />
-     </form>-->
-</div>
-<div>
-    <a asp-controller="Account" asp-action="Register">Zarejestruj się</a>
-    <!--<form asp-controller="Account" asp-action="Register" method="post">
-        <input type="submit" value="Zarejestruj się" />
-    </form>-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="ButtonDiv">
+            <a class="btn btn-default myBtn myBtnLog" asp-controller="Account" asp-action="Login">Zaloguj się</a>
+            <!--<form asp-controller="Account" asp-action="Login" method="post">
+               <input type="submit" value="Zaloguj się" />
+            </form>-->
+        </div>
+        <div class="ButtonDiv">
+            <a class="btn btn-default myBtn" asp-controller="Account" asp-action="Register">Zarejestruj się</a>
+            <!--<form asp-controller="Account" asp-action="Register" method="post">
+                <input type="submit" value="Zarejestruj się" />
+            </form>-->
+        </div>
+    </div>
 </div>
