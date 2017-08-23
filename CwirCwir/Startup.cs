@@ -44,16 +44,6 @@ namespace CwirCwir
             services.AddScoped<IUserService, UserService>();
             services.AddDbContext<CwirCwirDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("CwirCwir")));
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<CwirCwirDbContext>();
-            services.AddAuthentication(o =>
-               {
-                   o.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                   o.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                   o.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-               })
-               .AddCookie(o =>
-               {
-                   o.LoginPath = "/Account/Welcome";
-                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

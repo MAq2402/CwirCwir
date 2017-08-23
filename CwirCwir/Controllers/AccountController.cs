@@ -21,10 +21,6 @@ namespace CwirCwir.Controllers
         }
         [HttpGet]
 
-        public IActionResult Welcome()
-        {
-            return View();
-        }
         public IActionResult Login()
         {
             return View();
@@ -37,11 +33,11 @@ namespace CwirCwir.Controllers
             {
 
 
-                var LoginResult = await _signInManager.PasswordSignInAsync(model.UserName, model.Password,false, false);
+                var LoginResult = await _signInManager.PasswordSignInAsync(model.UserName, model.Password,true, false);
 
                 if(LoginResult.Succeeded)
                 {
-                    RedirectToAction("Index", "Home");
+                    return RedirectToAction("Wall", "Home");
                 }
                 else
                 {
@@ -74,9 +70,7 @@ namespace CwirCwir.Controllers
                 {
                     await _signInManager.SignInAsync(user,false);
 
-                    return RedirectToAction("Index", "Home");
-
-                    
+                    return RedirectToAction("Wall", "Home");
                 }
                 else
                 {

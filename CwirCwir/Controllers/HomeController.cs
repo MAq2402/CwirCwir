@@ -23,14 +23,24 @@ namespace CwirCwir.Controllers
             _userService = userService;
         }
 
-        [HttpGet]
+        [HttpGet,AllowAnonymous]
         public IActionResult Index()
+        {
+            if(User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Wall", "Home");
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Wall()
         {
             return View();
         }
 
         [HttpPost,ValidateAntiForgeryToken]
-        public IActionResult Index(IndexViewModel model)
+        public IActionResult Wall(WallViewModel model)
         {
             var newPost = new Post();
 

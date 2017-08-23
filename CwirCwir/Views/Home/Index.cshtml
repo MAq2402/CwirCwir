@@ -1,20 +1,24 @@
-﻿@model IndexViewModel
-@{
-    ViewBag.Title = "Cwir Cwir";
+﻿@{ 
+    ViewBag.Title = "Witaj";
 }
-<h2>Strona Głowna</h2>
-<div>
-    <form method="post" asp-antiforgery="true" >
-        <div>
-        <label asp-for="Content"></label>
-        <input asp-for="Content" />
-        <span asp-validation-for="Content"></span>
-            </div>
-        <div>
-            <input type="submit" value="Cwir Cwir" />
-        </div>  
-   </form>  
-</div>
-<div>
-   @Html.Partial("_Posts");
+@section Styles
+{
+    <link rel="stylesheet" href="~/Styles/Account-Welcome.css" />
+}
+<h1>Witaj na Cwir Cwir</h1>
+<div class="container-fluid">
+    <div class="row">
+        <div class="ButtonDiv">
+            <a class="btn btn-default myBtn myBtnLog" asp-controller="Account" asp-action="Login">Zaloguj się</a>
+            <!--<form asp-controller="Account" asp-action="Login" method="post">
+               <input type="submit" value="Zaloguj się" />
+            </form>-->
+        </div>
+        <div class="ButtonDiv">
+            <a class="btn btn-default myBtn" asp-controller="Account" asp-action="Register">Zarejestruj się</a>
+            <!--<form asp-controller="Account" asp-action="Register" method="post">
+                <input type="submit" value="Zarejestruj się" />
+            </form>-->
+        </div>
+    </div>
 </div>
