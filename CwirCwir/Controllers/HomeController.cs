@@ -23,13 +23,9 @@ namespace CwirCwir.Controllers
             _userService = userService;
         }
 
-        [HttpGet,AllowAnonymous]
+        [HttpGet]
         public IActionResult Index()
         {
-            if(HttpContext.User!=null)
-            {
-                return RedirectToAction("Welcome", "Account");
-            }
             return View();
         }
 

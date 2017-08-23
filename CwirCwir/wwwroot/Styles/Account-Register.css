@@ -51,7 +51,25 @@
     margin-left: auto;
     margin-right: auto;
 }
+.myBtn {
+    width: 82%;
+    margin-top: 12px;
+}
 #ButtonDiv
 {
-    width:100px;
+    display:flex;
+    justify-content:center;
+}
+.ValSpan
+{
+   display:table;
+   margin:0 auto;
+}
+.ValSum {
+    color: #ff3333;
+    text-align:center;
+}
+.ValSum ul
+{
+    list-style-type:none;
 }

@@ -14,6 +14,5 @@ namespace CwirCwir.ViewModels.Account
         [Required,DataType(DataType.Password),Display(Name ="Hasło")]
         public string Password { get; set; }
 
-        public string ReturnUrl { get; set; }
     }
 }

@@ -28,27 +28,27 @@
   </div><!-- /.container-fluid -->
 </nav>
 <form class="form-horizontal" method="post" asp-antiforgery="true">
-    <div asp-validation-summary="ModelOnly">
-
-    </div>
     <div class="form-group" >
         <label asp-for="UserName" class="control-label UserName"></label>
         <input asp-for="UserName" class="form-control" />
-        <span asp-validation-for="UserName"></span>
+        <span class="ValSpan" asp-validation-for="UserName"></span>
 
     </div>
     <div class="form-group">
         <label asp-for="Password" class="control-label Password"></label>
         <input asp-for="Password" class="form-control" />
-        <span asp-validation-for="Password"></span>
+        <span class="ValSpan" asp-validation-for="Password"></span>
     </div>
     <div class="form-group">
         <label asp-for="ConfirmPassword"class="control-label ConfirmPassword" ></label>
         <input asp-for="ConfirmPassword" class="form-control" />
-        <span asp-validation-for="ConfirmPassword"></span>
+        <span class="ValSpan" asp-validation-for="ConfirmPassword"></span>
     </div>
     <div id="ButtonDiv">
-        <input class="myBtn btn btn-primary" type="submit" value="Zarejestruj" />
+        <input class="myBtn btn btn-primary" type="submit" value="Zarejestruj się" />
+    </div>
+    <div class="ValSum" asp-validation-summary="ModelOnly">
+
     </div>
 
 </form>

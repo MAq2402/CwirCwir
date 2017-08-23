@@ -41,10 +41,7 @@ namespace CwirCwir.Controllers
 
                 if(LoginResult.Succeeded)
                 {
-                    if(Url.IsLocalUrl(model.ReturnUrl))
-                    {
-                        return Redirect(model.ReturnUrl);
-                    }
+                    RedirectToAction("Index", "Home");
                 }
                 else
                 {
@@ -52,7 +49,7 @@ namespace CwirCwir.Controllers
                     return View();// dodac model? 
                 }
             }
-            return RedirectToAction("Index", "Home");
+            return View();
             
             
             
@@ -75,7 +72,7 @@ namespace CwirCwir.Controllers
 
                 if(createResult.Succeeded)
                 {
-                    await _signInManager.SignInAsync(user, false);
+                    await _signInManager.SignInAsync(user,false);
 
                     return RedirectToAction("Index", "Home");
 
@@ -85,7 +82,29 @@ namespace CwirCwir.Controllers
                 {
                     foreach(var error in createResult.Errors)
                     {
-                        ModelState.AddModelError("",error.Description);
+
+                        if(error.Code == "PasswordTooShort")
+                        {
+                            ModelState.AddModelError("", "Hasło musi posiadać conajmniej 6 znaków");
+                        }
+                        else if(error.Code == "PasswordRequiresNonAlphanumeric")
+                        {
+                            ModelState.AddModelError("", "Hasło musi posiadać przynajmniej jeden niealfanumeryczny znak");
+                        }
+                        else if (error.Code == "PasswordRequiresDigit")
+                        {
+                            ModelState.AddModelError("", "Hasło musi posiadać przynajmniej jedną cyfrę");
+                        }
+                        else if (error.Code == "PasswordRequiresUpper")
+                        {
+                            ModelState.AddModelError("", "Hasło musi posiadać przynajmniej jedną wielką literę");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Twoje hasło jest błędne");
+                        }
+
+                        
                     }
                 }
             }

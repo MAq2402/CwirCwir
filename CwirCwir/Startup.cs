@@ -16,6 +16,7 @@ using CwirCwir.Entities;
 using CwirCwir.Services;
 using Microsoft.AspNetCore.Identity;
 using CwirCwir.AspNetCore.Builder;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace CwirCwir
 {
@@ -31,6 +32,8 @@ namespace CwirCwir
                                        .AddJsonFile("appsettings.json")
                                        .AddEnvironmentVariables();
 
+
+
             Configuration = builder.Build();
         }
         public void ConfigureServices(IServiceCollection services)
@@ -41,6 +44,16 @@ namespace CwirCwir
             services.AddScoped<IUserService, UserService>();
             services.AddDbContext<CwirCwirDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("CwirCwir")));
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<CwirCwirDbContext>();
+            services.AddAuthentication(o =>
+               {
+                   o.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                   o.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                   o.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+               })
+               .AddCookie(o =>
+               {
+                   o.LoginPath = "/Account/Welcome";
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +68,7 @@ namespace CwirCwir
 
             app.UseAuthentication();
 
+           
             app.UseStaticFiles();
 
             app.UseNodeModules(env.ContentRootPath);
