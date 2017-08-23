@@ -4,6 +4,9 @@
 }
 <h2>Strona Głowna</h2>
 <div>
+    @await Component.InvokeAsync("LoginLogout");
+</div>
+<div>
     <form method="post" asp-antiforgery="true" >
         <div>
         <label asp-for="Content"></label>

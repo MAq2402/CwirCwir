@@ -23,6 +23,10 @@ namespace CwirCwir.Controllers
 
         public IActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Wall", "Home");
+            }
             return View();
         }
 
@@ -45,15 +49,15 @@ namespace CwirCwir.Controllers
                     return View();// dodac model? 
                 }
             }
-            return View();
-            
-            
-            
+            return View();       
         }
-
         [HttpGet]
         public IActionResult Register()
         {
+            if(User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Wall", "Home");
+            }
             return View();
         }
 
@@ -74,45 +78,48 @@ namespace CwirCwir.Controllers
                 }
                 else
                 {
-                    foreach(var error in createResult.Errors)
-                    {
-
-                        if(error.Code == "PasswordTooShort")
-                        {
-                            ModelState.AddModelError("", "Hasło musi posiadać conajmniej 6 znaków");
-                        }
-                        else if(error.Code == "PasswordRequiresNonAlphanumeric")
-                        {
-                            ModelState.AddModelError("", "Hasło musi posiadać przynajmniej jeden niealfanumeryczny znak");
-                        }
-                        else if (error.Code == "PasswordRequiresDigit")
-                        {
-                            ModelState.AddModelError("", "Hasło musi posiadać przynajmniej jedną cyfrę");
-                        }
-                        else if (error.Code == "PasswordRequiresUpper")
-                        {
-                            ModelState.AddModelError("", "Hasło musi posiadać przynajmniej jedną wielką literę");
-                        }
-                        else
-                        {
-                            ModelState.AddModelError("", "Twoje hasło jest błędne");
-                        }
-
-                        
-                    }
+                    PrintErrors(createResult);
                 }
             }
             return View();
         }
+
+        
 
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
 
-            return RedirectToAction("Login","Account");
+            return RedirectToAction("Index","Home");
         }
 
+        private void PrintErrors(IdentityResult createResult)
+        {
+            foreach (var error in createResult.Errors)
+            {
 
+                if (error.Code == "PasswordTooShort")
+                {
+                    ModelState.AddModelError("", "Hasło musi posiadać conajmniej 6 znaków");
+                }
+                else if (error.Code == "PasswordRequiresNonAlphanumeric")
+                {
+                    ModelState.AddModelError("", "Hasło musi posiadać przynajmniej jeden niealfanumeryczny znak");
+                }
+                else if (error.Code == "PasswordRequiresDigit")
+                {
+                    ModelState.AddModelError("", "Hasło musi posiadać przynajmniej jedną cyfrę");
+                }
+                else if (error.Code == "PasswordRequiresUpper")
+                {
+                    ModelState.AddModelError("", "Hasło musi posiadać przynajmniej jedną wielką literę");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Twoje Dane do rejestracji są błędne");
+                }
+            }
+        }
     }
 }

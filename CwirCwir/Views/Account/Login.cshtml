@@ -3,22 +3,23 @@
     ViewBag.Title = "Logowanie";
 }
 
-<h2>Zaloguj się</h2>
-<form method="post" asp-antiforgery="true">
-    <div asp-validation-summary="ModelOnly">
-
-    </div>
-    <div>
+<h2>Zaloguj się do Ćwir Ćwir</h2>
+<form class="form-horizontal" method="post" asp-antiforgery="true">
+    
+    <div class="form-group">
         <label asp-for="UserName"></label>
         <input asp-for="UserName" />
         <span asp-validation-for="UserName"></span>
     </div>
-    <div>
+    <div class="form-group">
         <label asp-for="Password"></label>
         <input asp-for="Password" />
         <span asp-validation-for="Password"></span>
     </div>
-    <div>
-        <input type="submit" value="Zaloguj" />
+    <div id="ButtonDiv">
+        <input class="btn btn-primary" type="submit" value="Zaloguj się" />
+    </div>
+    <div class="ValSum" asp-validation-summary="ModelOnly">
+
     </div>
 </form>
