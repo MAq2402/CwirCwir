@@ -37,28 +37,14 @@
     color: #5e5e5e;
 }
 
-.Password{
-    width:12.8%;
-}
-.ConfirmPassword{
-    width:18%;
-}
-.UserName{
-    width:19.5%;
-}
-.form-control {
+.form-horizontal {
     width: 80%;
     margin-left: auto;
     margin-right: auto;
 }
 .myBtn {
-    width: 82%;
+    width: 100%;
     margin-top: 12px;
-}
-#ButtonDiv
-{
-    display:flex;
-    justify-content:center;
 }
 .ValSpan
 {

@@ -37,7 +37,7 @@ namespace CwirCwir.Controllers
             {
 
 
-                var LoginResult = await _signInManager.PasswordSignInAsync(model.UserName, model.Password,true, false);
+                var LoginResult = await _signInManager.PasswordSignInAsync(model.UserName, model.Password,false, false);
 
                 if(LoginResult.Succeeded)
                 {
@@ -46,7 +46,6 @@ namespace CwirCwir.Controllers
                 else
                 {
                     ModelState.AddModelError("", "Wystąpił błąd, spróbuj zalogować się ponownie");
-                    return View();// dodac model? 
                 }
             }
             return View();       

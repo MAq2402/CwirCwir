@@ -2,22 +2,33 @@
 @{ 
     ViewBag.Title = "Logowanie";
 }
+@section Styles
+{
+    <link href="~/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Styles/Account-Login.css" rel="stylesheet" />
+}
+@section Scripts
+{
+    <script src="/node_modules/jquery/dist/jquery.js"></script>
+    <script src="/node_modules/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="/node_modules/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+}
 
 <h2>Zaloguj się do Ćwir Ćwir</h2>
 <form class="form-horizontal" method="post" asp-antiforgery="true">
     
     <div class="form-group">
         <label asp-for="UserName"></label>
-        <input asp-for="UserName" />
-        <span asp-validation-for="UserName"></span>
+        <input asp-for="UserName" class="form-control" />
+        <span class="ValSpan" asp-validation-for="UserName"></span>
     </div>
     <div class="form-group">
         <label asp-for="Password"></label>
-        <input asp-for="Password" />
-        <span asp-validation-for="Password"></span>
+        <input asp-for="Password" class="form-control" />
+        <span class="ValSpan" asp-validation-for="Password"></span>
     </div>
     <div id="ButtonDiv">
-        <input class="btn btn-primary" type="submit" value="Zaloguj się" />
+        <input class="btn btn-primary myBtn" type="submit" value="Zaloguj się" />
     </div>
     <div class="ValSum" asp-validation-summary="ModelOnly">
 
