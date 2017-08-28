@@ -4,7 +4,6 @@
 }
 @section Styles
 {
-    <link href="~/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Styles/Account-Login.css" rel="stylesheet" />
 }
 @section Scripts
@@ -14,7 +13,20 @@
     <script src="/node_modules/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 }
 
-<h2>Zaloguj się do Ćwir Ćwir</h2>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class=" col-xs-10 navbar-header">
+            <a class="navbar-brand"><i class="fa fa-twitter" aria-hidden="true"></i>Zaloguj się</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+
+        <ul class="col-xs-2 nav navbar-nav navbar-right">
+            <li><a asp-controller="Account" asp-action="Register">Zajerestruj się</a></li>
+        </ul>
+        <!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
 <form class="form-horizontal" method="post" asp-antiforgery="true">
     
     <div class="form-group">

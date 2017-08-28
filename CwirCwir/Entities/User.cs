@@ -8,12 +8,10 @@ using System.Threading.Tasks;
 namespace CwirCwir.Entities
 {
     public class User:IdentityUser
-    {
-     
-        public IEnumerable<Post> Posts { get; set; }
-        public IEnumerable<Response> Responses { get; set; }
-        public IEnumerable<Message> MessagesSend { get; set; }
-        public IEnumerable<Message> MessagesRecived { get; set; }
+    {   
+        public List<Post> Posts { get; set; }
+        public List<Message> MessagesSend { get; set; }
+        public List<Message> MessagesRecived { get; set; }
 
     }
 }

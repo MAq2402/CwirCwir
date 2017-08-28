@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace CwirCwir.Entities
 {
-    public class Response:Post
+    public class Sharing: Post
     {
-        public Post RespondedPost { get; set; }
+        public Post SharedPost { get; set; }
     }
 }
