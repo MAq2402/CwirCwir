@@ -7,8 +7,10 @@ namespace CwirCwir.Entities
 {
     public class Message
     {
-        public int Id { get; set; }
+        public int MessageId { get; set; }
         public string Content { get; set; }
-        public User Author { get; set; }
+
+        public string UserId { get; set; }
+        public virtual User User { get; set; }
     }
 }

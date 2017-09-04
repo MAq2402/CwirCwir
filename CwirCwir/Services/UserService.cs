@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using CwirCwir.Entities;
 using CwirCwir.DbContexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace CwirCwir.Services
 {
@@ -33,5 +34,7 @@ namespace CwirCwir.Services
            return _context.Users.FirstOrDefault(x => x.UserName == UserName);
            
         }
+        
+
     }
 }

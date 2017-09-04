@@ -12,6 +12,8 @@ namespace CwirCwir.ViewModels.Home
     {
         [Display(Name = "Ćwirnij coś"), MaxLength(150), MinLength(1)]
         public string Content { get; set; }
+        List<Post> Posts { get; set; }
+
 
     }
 }

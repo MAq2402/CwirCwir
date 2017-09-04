@@ -19,9 +19,8 @@ namespace CwirCwir.Services
     }
     public class PostServiceInMemory : IPostService
     {
-        public PostServiceInMemory(CwirCwirDbContext context, IUserService userService)
+        public PostServiceInMemory(IUserService userService)
         {
-            _context = context;
             _userService = userService;
 
             postData = new List<Post>()

@@ -10,9 +10,9 @@ namespace CwirCwir.Entities
         public int Id { get; set; }
         public string Content { get; set; }
         public int Likes { get; set; }
-        public List<Response> Responses { get; set; }
-        public User Author { get; set; }
-        public DateTime PostDate { get; set; }
-        public List<Sharing> Sharings { get; set; }
+        public virtual List<Response> Responses { get; set; }
+        public virtual User Author { get; set; }
+        public virtual DateTime PostDate { get; set; }
+        public virtual List<Sharing> Sharings { get; set; }
     }
 }

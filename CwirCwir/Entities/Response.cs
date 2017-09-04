@@ -7,6 +7,6 @@ namespace CwirCwir.Entities
 {
     public class Response:Post
     {
-        public Post RespondedPost { get; set; }
+        public virtual Post RespondedPost { get; set; }
     }
 }

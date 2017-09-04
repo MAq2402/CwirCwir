@@ -7,6 +7,6 @@ namespace CwirCwir.Entities
 {
     public class Sharing: Post
     {
-        public Post SharedPost { get; set; }
+        public virtual Post SharedPost { get; set; }
     }
 }

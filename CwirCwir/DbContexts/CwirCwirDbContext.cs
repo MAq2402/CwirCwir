@@ -8,14 +8,24 @@ using System.Threading.Tasks;
 
 namespace CwirCwir.DbContexts
 {
-    public class CwirCwirDbContext:IdentityDbContext<User>
+    public class CwirCwirDbContext : IdentityDbContext<User>
     {
-        public CwirCwirDbContext(DbContextOptions options):base(options)
+        public CwirCwirDbContext(DbContextOptions options) : base(options)
         {
 
         }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Response> Responses { get; set; }
+        public DbSet<Sharing> Sharings { get; set; }
 
-        
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
 
+            builder.Entity<Message>()
+                .HasOne("User", "UserId");
+
+        }
     }
 }
