@@ -11,10 +11,10 @@ namespace CwirCwir.Entities
     { 
         
         public virtual List<Post> Posts { get; set; }
-        public virtual List<Message> MessagesSend { get; set; }
-        public virtual List<Message> MessagesRecived { get; set; }
-        public virtual List<User> FollowedUsers { get; set; }
-        public virtual List<User> UserFollowers { get; set; }
+        public virtual List<Message> Messages { get; set; }
+
+        /*public virtual List<User> FollowedUsers { get; set; }
+        public virtual List<User> UserFollowers { get; set; }*/
 
     }
 }

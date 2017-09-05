@@ -23,14 +23,14 @@ namespace CwirCwir.Services
         {
             _userService = userService;
 
-            postData = new List<Post>()
+            /*postData = new List<Post>()
             {
                 new Post {Id=1,Content="Uczymy się", Likes = 0,
                             Author = _userService.GetUser("MAq") },
                 new Post {Id=1,Content="Jest Cudownie",Likes=0, Author =_userService.GetUser("MAq")},
 
                 new Post {Id=1,Content="Jest Progres",Likes=0, Author =_userService.GetUser("MAq")}
-            };
+            };*/
         }
 
        

@@ -5,8 +5,16 @@ using System.Threading.Tasks;
 
 namespace CwirCwir.Entities
 {
-    public class Sharing: Post
+    public class Sharing
     {
-        public virtual Post SharedPost { get; set; }
+        public int Id { get; set; }
+        public string Content { get; set; }
+        public int Likes { get; set; }
+        public virtual List<Response> Responses { get; set; }
+        public string UserId { get; set; }
+        public User User { get; set; }
+        public DateTime PostDate { get; set; }
+        public int PostId { get; set; }
+        public Post Post { get; set; }
     }
 }

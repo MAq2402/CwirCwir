@@ -18,14 +18,5 @@ namespace CwirCwir.DbContexts
         public DbSet<Post> Posts { get; set; }
         public DbSet<Response> Responses { get; set; }
         public DbSet<Sharing> Sharings { get; set; }
-
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-
-            builder.Entity<Message>()
-                .HasOne("User", "UserId");
-
-        }
     }
 }

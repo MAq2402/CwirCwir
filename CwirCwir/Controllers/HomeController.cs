@@ -23,10 +23,10 @@ namespace CwirCwir.Controllers
             _userService = userService;
         }
 
-        [HttpGet,AllowAnonymous]
+        [HttpGet, AllowAnonymous]
         public IActionResult Index()
         {
-            if(User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Wall", "Home");
             }
@@ -38,9 +38,10 @@ namespace CwirCwir.Controllers
         {
             return View();
         }
+    }
 
-        [HttpPost,ValidateAntiForgeryToken]
-        public IActionResult Wall(WallViewModel model)
+        //[HttpPost, ValidateAntiForgeryToken]
+        /*public IActionResult Wall(WallViewModel model)
         {
             var newPost = new Post();
 
@@ -56,6 +57,7 @@ namespace CwirCwir.Controllers
 
             return View(model);
             
-        }
-    }
+            
+        }*/
+    
 }
