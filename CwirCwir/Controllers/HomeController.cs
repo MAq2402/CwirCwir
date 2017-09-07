@@ -4,6 +4,7 @@ using CwirCwir.ViewModels.Home;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,10 +18,12 @@ namespace CwirCwir.Controllers
         private IPostService _postService;
         private IUserService _userService;
 
+
         public HomeController(IPostService postService, IUserService userService)
         {
             _postService = postService;
             _userService = userService;
+            
         }
 
         [HttpGet, AllowAnonymous]
@@ -38,26 +41,38 @@ namespace CwirCwir.Controllers
         {
             return View();
         }
-    }
-
-        //[HttpPost, ValidateAntiForgeryToken]
-        /*public IActionResult Wall(WallViewModel model)
+        [HttpPost, ValidateAntiForgeryToken]
+        public IActionResult Wall(WallViewModel wallViewModel)
         {
-            var newPost = new Post();
+            if (ModelState.IsValid)
+            {
+                var newPost = new Post();
 
-            newPost.Content = model.Content;
+                newPost.Content = wallViewModel.Content;
 
-            newPost.Likes = 0;
+                newPost.Likes = 0;
+                newPost.PostDate = DateTime.Now;
 
-            var userName = User.Identity.Name;
+                var userName = User.Identity.Name;
 
-            newPost.Author = _userService.GetUser(userName);
+                newPost.User = _userService.GetUser(userName);
 
-            _postService.Add(newPost);
+                newPost = _postService.Add(newPost);
+
+                return RedirectToAction("Post", new { newPost.Id });
+            }
+            return View();
+
+        }
+        public IActionResult Post(int id)
+        {
+            var model = new PostViewModel();
+            model.post = _postService.GetPost(id);
 
             return View(model);
-            
-            
-        }*/
-    
+        }
+    } 
+
 }
+
+

@@ -28,6 +28,7 @@ namespace CwirCwir.Controllers
                 return RedirectToAction("Wall", "Home");
             }
             return View();
+
         }
 
         [HttpPost,ValidateAntiForgeryToken]

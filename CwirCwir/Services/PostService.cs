@@ -1,6 +1,7 @@
 ﻿using CwirCwir.DbContexts;
 using CwirCwir.Entities;
 using CwirCwir.Services;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,46 +12,54 @@ namespace CwirCwir.Services
 {
     public interface IPostService
     {
-        void Add(Post newPost);
-
+        Post Add(Post newPost);
+        Post GetPost(int id);
         void Commit();
-        IEnumerable<Post> GetAll();
+        List<Post> Posts { get; }
 
     }
-    public class PostServiceInMemory : IPostService
+
+    public class DateComparer : IComparer<Post>
     {
-        public PostServiceInMemory(IUserService userService)
+        public int Compare(Post x, Post y)
         {
-            _userService = userService;
+            return - x.PostDate.CompareTo(y.PostDate);
+        }
+    }
 
-            /*postData = new List<Post>()
+    public class PostService : IPostService
+    {
+        private CwirCwirDbContext _context;
+        public PostService(CwirCwirDbContext context)
+        {
+            _context = context;
+        }
+
+        public List<Post> Posts
+        {
+            get
             {
-                new Post {Id=1,Content="Uczymy się", Likes = 0,
-                            Author = _userService.GetUser("MAq") },
-                new Post {Id=1,Content="Jest Cudownie",Likes=0, Author =_userService.GetUser("MAq")},
-
-                new Post {Id=1,Content="Jest Progres",Likes=0, Author =_userService.GetUser("MAq")}
-            };*/
+                List<Post> posts = _context.Posts.Include(p => p.User).ToList();
+                posts.Sort(new DateComparer());
+                return posts;
+            }
         }
 
-       
-        public void Add(Post newPost)
+        public Post Add(Post newPost)
         {
-            postData.Add(newPost);
+            _context.Add(newPost);
+            _context.SaveChanges();
+            return newPost;
         }
+
         public void Commit()
         {
-            throw new NotImplementedException();
+            _context.SaveChanges();
         }
 
-        public IEnumerable<Post> GetAll()
+        public Post GetPost(int id)
         {
-            return postData;
+            return Posts.FirstOrDefault(p => p.Id == id);
         }
-
-
-        private readonly List<Post> postData;
-        private CwirCwirDbContext _context;
-        private IUserService _userService;
     }
 }

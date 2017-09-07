@@ -1,0 +1,23 @@
+﻿@model  PostViewModel
+@{ 
+    ViewBag.Title = "Post";
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        @Model.post.User.UserName
+        <span id="PostDate">@Model.post.PostDate;</span>
+    </div>
+    <div class=" panel-body">
+        @Model.post.Content;
+    </div>
+    <div class="panel-footer">
+        Lajki: @Model.post.Likes
+        Udostępnienia: @Model.post.Sharings.Count
+        Odpowiedzi: @Model.post.Responses.Count
+    </div>
+</div>
+<style>
+    #PostDate {
+        float: right;
+    }
+</style>

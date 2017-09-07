@@ -8,6 +8,11 @@ namespace CwirCwir.Entities
 {
     public class Post
     {
+        public Post()
+        {
+            Responses = new List<Response>();
+            Sharings = new List<Sharing>();
+        }
         public int Id { get; set; }
         public string Content { get; set; }
         public int Likes { get; set; }

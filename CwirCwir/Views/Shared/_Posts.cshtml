@@ -1,13 +1,66 @@
 ﻿
 @inject IPostService postService
-<div>
-    @foreach (var post in postService.GetAll())
+<div id="PostsDiv">
+    @foreach (var post in postService.Posts)
     {
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                @post.User.UserName
+                @if (post.PostDate.Day == DateTime.Now.Day)
+                {
+                    if (post.PostDate.Hour == DateTime.Now.Hour)
+                    {
+                        if (post.PostDate.Minute == DateTime.Now.Minute)
+                        {
+                            var PassedSecondsSincePosted = DateTime.Now.Second - post.PostDate.Second;
+                            <span id="PostDate">@PassedSecondsSincePosted sek.</span>
 
-        <h1>@post.Author.UserName</h1>
-        @post.Content;
-        <br />
-        <span>Lajki: @post.Likes;</span>
-        <br />
+                        }
+                        else
+                        {
+                            var PassedMinutesSincePosted = DateTime.Now.Minute - post.PostDate.Minute;
+                            <span id="PostDate">@PassedMinutesSincePosted min.</span>
+
+                        }
+
+                    }
+                    else
+                    {
+                        var PassedHoursSincePosted = DateTime.Now.Hour - post.PostDate.Hour;
+                            <span id="PostDate">@PassedHoursSincePosted godz.</span>
+
+                    }
+
+
+                }
+                else
+                {
+                    var PassedDaysSincePosted = DateTime.Now.Day - post.PostDate.Day;
+                        <span id="PostDate">@PassedDaysSincePosted dni</span>
+
+                }
+            </div>
+            <div class=" panel-body">
+                @post.Content;
+            </div>
+            <div class="panel-footer">
+                Lajki: @post.Likes
+                Udostępnienia: @post.Sharings.Count
+                Odpowiedzi: @post.Responses.Count
+           </div>
+        </div>
     }
 </div>
+
+<style>
+    #PostDate
+    {
+        float:right;
+    }
+    #PostsDiv {
+        width: 55%;
+        margin-left:auto;
+        margin-right: auto;
+        margin-top: 8px;
+    }
+</style>

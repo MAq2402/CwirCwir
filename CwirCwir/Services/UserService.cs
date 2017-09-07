@@ -14,7 +14,10 @@ namespace CwirCwir.Services
         User GetUser(string UserName);
 
         void AddPost(Post newPost);
+
+        IEnumerable<User> Users { get;  }
     }
+
     public class UserService : IUserService
     {
         private CwirCwirDbContext _context;
@@ -23,6 +26,8 @@ namespace CwirCwir.Services
         {
             _context = context;
         }
+
+        public IEnumerable<User> Users { get => _context.Users.Include(p=>p.Posts);  }
 
         public void AddPost(Post newPost)
         {
