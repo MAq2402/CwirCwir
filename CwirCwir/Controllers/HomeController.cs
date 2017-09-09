@@ -50,7 +50,7 @@ namespace CwirCwir.Controllers
 
                 newPost.Content = wallViewModel.Content;
 
-                newPost.Likes = 0;
+                
                 newPost.PostDate = DateTime.Now;
 
                 var userName = User.Identity.Name;
@@ -71,6 +71,7 @@ namespace CwirCwir.Controllers
 
             return View(model);
         }
+
     } 
 
 }

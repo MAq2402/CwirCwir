@@ -1,56 +1,62 @@
 ﻿
 @inject IPostService postService
-<div id="PostsDiv">
-    @foreach (var post in postService.Posts)
-    {
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                @post.User.UserName
-                @if (post.PostDate.Day == DateTime.Now.Day)
+    <div id="PostsDiv">
+        @foreach (var post in postService.Posts)
+        {
+            <div id="LinkToPostDiv">
+                <a class="LinkToPost" asp-action="Post" asp-controller="Home" asp-route-id="@post.Id">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            @post.User.UserName
+                            @*@if (post.PostDate.Day == DateTime.Now.Day)
                 {
                     if (post.PostDate.Hour == DateTime.Now.Hour)
                     {
                         if (post.PostDate.Minute == DateTime.Now.Minute)
                         {
                             var PassedSecondsSincePosted = DateTime.Now.Second - post.PostDate.Second;
-                            <span id="PostDate">@PassedSecondsSincePosted sek.</span>
+                                        <span id="PostDate">@PassedSecondsSincePosted sek.</span>
 
-                        }
-                        else
-                        {
-                            var PassedMinutesSincePosted = DateTime.Now.Minute - post.PostDate.Minute;
-                            <span id="PostDate">@PassedMinutesSincePosted min.</span>
+                                    }
+                                    else
+                                    {
+                                        var PassedMinutesSincePosted = DateTime.Now.Minute - post.PostDate.Minute;
+                                        <span id="PostDate">@PassedMinutesSincePosted min.</span>
 
-                        }
+                                    }
 
-                    }
-                    else
-                    {
-                        var PassedHoursSincePosted = DateTime.Now.Hour - post.PostDate.Hour;
-                            <span id="PostDate">@PassedHoursSincePosted godz.</span>
+                                }
+                                else
+                                {
+                                    var PassedHoursSincePosted = DateTime.Now.Hour - post.PostDate.Hour;
+                                    <span id="PostDate">@PassedHoursSincePosted godz.</span>
 
-                    }
+                                }
 
 
-                }
-                else
-                {
-                    var PassedDaysSincePosted = DateTime.Now.Day - post.PostDate.Day;
-                        <span id="PostDate">@PassedDaysSincePosted dni</span>
+                            }
+                            else
+                            {
+                                var PassedDaysSincePosted = DateTime.Now.Day - post.PostDate.Day;
+                                <span id="PostDate">@PassedDaysSincePosted dni</span>
 
-                }
+                            }*@
+                            <span id="PostDate">@post.PostDate</span>
+                        </div>
+                        <div class=" panel-body">
+                            @post.Content;
+                        </div>
+                        <div class="panel-footer">
+                            <span class="glyphicon glyphicon-heart"></span> @post.Likes.Count
+                            <span class="glyphicon glyphicon-refresh"></span> @post.Sharings.Count
+                            <span class="glyphicon glyphicon-comment"></span> @post.Responses.Count
+                        </div>
+                    </div>
+                </a>
             </div>
-            <div class=" panel-body">
-                @post.Content;
-            </div>
-            <div class="panel-footer">
-                Lajki: @post.Likes
-                Udostępnienia: @post.Sharings.Count
-                Odpowiedzi: @post.Responses.Count
-           </div>
-        </div>
-    }
-</div>
+        }
+    </div>
+
 
 <style>
     #PostDate
@@ -62,5 +68,31 @@
         margin-left:auto;
         margin-right: auto;
         margin-top: 8px;
+    }
+    .glyphicon
+    {
+        margin-left: 5px;
+        margin-right:5px;
+    }
+    .panel:hover
+    {
+        background-color:lightblue;
+    }
+    .LinkToPost {
+        color: #333;
+    }
+    .LinkToPost:link
+    {
+        text-decoration: none;
+    }
+    .LinkToPost:visited {
+        text-decoration: none;
+    }
+        .LinkToPost:hover {
+            text-decoration: none;
+            color: #333;
+        }
+    .LinkToPost:active {
+        text-decoration: none;
     }
 </style>

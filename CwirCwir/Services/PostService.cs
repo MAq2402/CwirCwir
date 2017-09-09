@@ -16,6 +16,7 @@ namespace CwirCwir.Services
         Post GetPost(int id);
         void Commit();
         List<Post> Posts { get; }
+        void AddLike(int PostId);
 
     }
 
@@ -50,6 +51,11 @@ namespace CwirCwir.Services
             _context.Add(newPost);
             _context.SaveChanges();
             return newPost;
+        }
+
+        public void AddLike(int PostId)
+        {
+            
         }
 
         public void Commit()

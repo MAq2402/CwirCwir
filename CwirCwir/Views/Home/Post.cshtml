@@ -2,6 +2,10 @@
 @{ 
     ViewBag.Title = "Post";
 }
+@section Styles
+{
+    <link href="~/Styles/Home-Post.css" rel="stylesheet" />
+}
 <div class="panel panel-primary">
     <div class="panel-heading">
         @Model.post.User.UserName
@@ -11,7 +15,7 @@
         @Model.post.Content;
     </div>
     <div class="panel-footer">
-        Lajki: @Model.post.Likes
+        Lajki: @Model.post.Likes.Count
         Udostępnienia: @Model.post.Sharings.Count
         Odpowiedzi: @Model.post.Responses.Count
     </div>
