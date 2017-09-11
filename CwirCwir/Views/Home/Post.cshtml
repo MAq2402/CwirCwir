@@ -6,6 +6,7 @@
 {
     <link href="~/Styles/Home-Post.css" rel="stylesheet" />
 }
+@Html.Partial("_Navbar");
 <div class="panel panel-primary">
     <div class="panel-heading">
         @Model.post.User.UserName
@@ -15,13 +16,20 @@
         @Model.post.Content;
     </div>
     <div class="panel-footer">
-        Lajki: @Model.post.Likes.Count
-        Udostępnienia: @Model.post.Sharings.Count
-        Odpowiedzi: @Model.post.Responses.Count
-    </div>
+        <form  method="post" asp-action="Like" asp-contoller="Home" asp-route-id="@Model.post.Id">
+            <button type="submit" class="btn btn-deafult">
+                <span class="glyphicon glyphicon-heart"></span> @Model.post.Likes.Count
+            </button>
+        </form>
+        <form method="post" asp-action="" asp-contoller="">
+            <button type="button" class="btn btn-deafult">
+                <span class="glyphicon glyphicon-refresh"></span> @Model.post.Sharings.Count
+            </button>
+        </form>
+            <form method="post" asp-action="" asp-contoller="">
+                <button type="button" class="btn btn-deafult">
+                    <span class="glyphicon glyphicon-comment"></span> @Model.post.Responses.Count
+                </button>
+            </form>
 </div>
-<style>
-    #PostDate {
-        float: right;
-    }
-</style>
+</div>

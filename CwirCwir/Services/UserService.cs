@@ -16,6 +16,7 @@ namespace CwirCwir.Services
         void AddPost(Post newPost);
 
         IEnumerable<User> Users { get;  }
+
     }
 
     public class UserService : IUserService
@@ -33,6 +34,7 @@ namespace CwirCwir.Services
         {
             
         }
+
 
         public User GetUser(string UserName)
         {

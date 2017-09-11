@@ -12,11 +12,11 @@ namespace CwirCwir.Services
 {
     public interface IPostService
     {
-        Post Add(Post newPost);
+        Post AddWithCommit(Post newPost);
         Post GetPost(int id);
-        void Commit();
         List<Post> Posts { get; }
-        void AddLike(int PostId);
+        void AddLike(Post post,Like newLike);
+        bool CheckIfUserLikedPost(Post post,User user);
 
     }
 
@@ -40,32 +40,43 @@ namespace CwirCwir.Services
         {
             get
             {
-                List<Post> posts = _context.Posts.Include(p => p.User).ToList();
+                List<Post> posts = _context.Posts.Include(p => p.User)
+                                                 .Include(p=>p.Likes)
+                                                 .Include(p=>p.Sharings)
+                                                 .Include(p=>p.Responses)
+                                                 .ToList();
                 posts.Sort(new DateComparer());
                 return posts;
             }
         }
 
-        public Post Add(Post newPost)
+        public Post AddWithCommit(Post newPost)
         {
             _context.Add(newPost);
             _context.SaveChanges();
             return newPost;
         }
 
-        public void AddLike(int PostId)
+        public void AddLike(Post post,Like newLike)
         {
-            
+            Posts.FirstOrDefault(x=>x.Id==post.Id)
+                 .Likes
+                 .Add(newLike);
         }
 
-        public void Commit()
-        {
-            _context.SaveChanges();
-        }
 
         public Post GetPost(int id)
         {
             return Posts.FirstOrDefault(p => p.Id == id);
+        }
+
+        public bool CheckIfUserLikedPost(Post post,User user)
+        {
+            if(post.Likes.Any(l=>l.User==user))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }
