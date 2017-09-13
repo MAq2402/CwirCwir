@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,9 +8,14 @@ namespace CwirCwir.Entities
 {
     public class Sharing
     {
+        public Sharing()
+        {
+            Responses = new List<Response>();
+            Likes = new List<Like>();
+        }
         public int Id { get; set; }
         public string Content { get; set; }
-        public int Likes { get; set; }
+        public List<Like> Likes { get; set; }
         public virtual List<Response> Responses { get; set; }
         public string UserId { get; set; }
         public User User { get; set; }

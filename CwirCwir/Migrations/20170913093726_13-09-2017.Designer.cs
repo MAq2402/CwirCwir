@@ -11,9 +11,10 @@ using System;
 namespace CwirCwir.Migrations
 {
     [DbContext(typeof(CwirCwirDbContext))]
-    partial class CwirCwirDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170913093726_13-09-2017")]
+    partial class _13092017
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

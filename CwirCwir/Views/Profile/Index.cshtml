@@ -1,1 +1,62 @@
-﻿
+﻿@inject IPostService postService
+@model User
+@{
+    ViewBag.Title = "Profil";
+}
+@section Styles{
+        <link href="~/Styles/Profile-Index.css" rel="stylesheet" />
+}
+@Html.Partial("_Navbar");
+<h1>@Model.UserName</h1>
+    <div class="dropdown btn-group">
+        <button class="btn btn-default dropdown-toggle BigDropDownButton" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Polubione
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu BigDropDown " aria-labelledby="dropdownMenuDivider">
+                @foreach(var post in postService.Posts.Where(p=>p.Likes.Any(u=>u.User==Model)))
+                {
+                    <li>@post.Content</li>
+                    <li role="separator" class="divider"></li>
+                }
+        </ul>
+    </div>
+<div class="dropdown btn-group">
+    <button class="btn btn-default dropdown-toggle BigDropDownButton" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Odpowiedzi
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu BigDropDown " aria-labelledby="dropdownMenu1">
+    </ul>
+</div>
+<div class="dropdown btn-group">
+    <button class="btn btn-default dropdown-toggle BigDropDownButton" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Udostępnienia
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu BigDropDown " aria-labelledby="dropdownMenu1">
+    </ul>
+</div>
+<div id="PostsDiv">
+    @foreach (var post in postService.Posts.Where(p=>p.User==Model))
+    {
+        <div id="LinkToPostDiv">
+            <a class="LinkToPost" asp-action="Post" asp-controller="Home" asp-route-id="@post.Id">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        @post.User.UserName
+                        <span id="PostDate">@post.PostDate</span>
+                    </div>
+                    <div class=" panel-body">
+                        @post.Content;
+                    </div>
+                    <div class="panel-footer">
+                        <span class="glyphicon glyphicon-heart"></span> @post.Likes.Count
+                        <span class="glyphicon glyphicon-refresh"></span> @post.Sharings.Count
+                        <span class="glyphicon glyphicon-comment"></span> @post.Responses.Count
+                    </div>
+                </div>
+            </a>
+        </div>
+    }
+</div>

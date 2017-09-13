@@ -13,8 +13,6 @@ namespace CwirCwir.Services
     {
         User GetUser(string UserName);
 
-        void AddPost(Post newPost);
-
         IEnumerable<User> Users { get;  }
 
     }
@@ -30,10 +28,6 @@ namespace CwirCwir.Services
 
         public IEnumerable<User> Users { get => _context.Users.Include(p=>p.Posts);  }
 
-        public void AddPost(Post newPost)
-        {
-            
-        }
 
 
         public User GetUser(string UserName)

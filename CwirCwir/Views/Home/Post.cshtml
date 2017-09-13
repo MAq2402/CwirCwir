@@ -1,4 +1,5 @@
-﻿@model  PostViewModel
+﻿@inject IPostService postService
+@model  PostViewModel
 @{ 
     ViewBag.Title = "Post";
 }
@@ -33,3 +34,23 @@
             </form>
 </div>
 </div>
+<div id="ResponseToPost">
+
+</div>
+@foreach (var response in Model.post.Responses)
+{
+    <div id="LinkToPostDiv">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    @response.User.UserName
+                    <span id="PostDate">@response.PostDate</span>
+                </div>
+                <div class=" panel-body">
+                    @response.Content;
+                </div>
+                <div class="panel-footer">
+                    <span class="glyphicon glyphicon-heart"></span> @response.Likes.Count
+                </div>
+            </div>
+    </div>
+}

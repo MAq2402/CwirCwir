@@ -8,39 +8,6 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             @post.User.UserName
-                            @*@if (post.PostDate.Day == DateTime.Now.Day)
-                {
-                    if (post.PostDate.Hour == DateTime.Now.Hour)
-                    {
-                        if (post.PostDate.Minute == DateTime.Now.Minute)
-                        {
-                            var PassedSecondsSincePosted = DateTime.Now.Second - post.PostDate.Second;
-                                        <span id="PostDate">@PassedSecondsSincePosted sek.</span>
-
-                                    }
-                                    else
-                                    {
-                                        var PassedMinutesSincePosted = DateTime.Now.Minute - post.PostDate.Minute;
-                                        <span id="PostDate">@PassedMinutesSincePosted min.</span>
-
-                                    }
-
-                                }
-                                else
-                                {
-                                    var PassedHoursSincePosted = DateTime.Now.Hour - post.PostDate.Hour;
-                                    <span id="PostDate">@PassedHoursSincePosted godz.</span>
-
-                                }
-
-
-                            }
-                            else
-                            {
-                                var PassedDaysSincePosted = DateTime.Now.Day - post.PostDate.Day;
-                                <span id="PostDate">@PassedDaysSincePosted dni</span>
-
-                            }*@
                             <span id="PostDate">@post.PostDate</span>
                         </div>
                         <div class=" panel-body">
@@ -74,9 +41,8 @@
         margin-left: 5px;
         margin-right:5px;
     }
-    .panel:hover
-    {
-        background-color:lightblue;
+    .panel:hover {
+        background-color: #5bc0de;
     }
     .LinkToPost {
         color: #333;
