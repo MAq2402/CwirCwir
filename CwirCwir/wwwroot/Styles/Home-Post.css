@@ -18,3 +18,21 @@
 form {
     display: inline;
 }
+#ResponseToPost {
+    background-color: #4099FF;
+    padding: 20px;
+    width: 55%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0px;
+}
+
+.btn-primary {
+    background-color: white;
+    color: gray;
+    padding: 5px 20px;
+}
+
+.CwirnijBtn {
+    text-align: right;
+}

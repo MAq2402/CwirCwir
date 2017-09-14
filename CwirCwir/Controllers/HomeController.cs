@@ -20,13 +20,19 @@ namespace CwirCwir.Controllers
         private IUserService _userService;
         private ILikeService _likeService;
         private ICwirCwirDbContextService _ccDbContextService;
+        private IResponseService _responseService;
 
-        public HomeController(IPostService postService, IUserService userService,ILikeService likeService,ICwirCwirDbContextService ccDbContextService)
+        public HomeController(IPostService postService,
+                                IUserService userService,
+                                ILikeService likeService,
+                                ICwirCwirDbContextService ccDbContextService,
+                                IResponseService responseService)
         {
             _postService = postService;
             _userService = userService;
             _likeService = likeService;
             _ccDbContextService = ccDbContextService;
+            _responseService = responseService;
             
         }
 
@@ -48,7 +54,7 @@ namespace CwirCwir.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public IActionResult Wall(WallViewModel wallViewModel)
         {
-            if (ModelState.IsValid)
+            if (wallViewModel.Content!=null)
             {
                 var newPost = new Post();
 
@@ -63,7 +69,7 @@ namespace CwirCwir.Controllers
 
                 newPost = _postService.AddWithCommit(newPost);
 
-                return RedirectToAction("Post", new { newPost.Id });
+                return RedirectToAction("Wall","Home");
             }
             return View();
 
@@ -104,9 +110,26 @@ namespace CwirCwir.Controllers
             return RedirectToAction("Post","Home",new { id=id});
         }
         [HttpPost]
-        public IActionResult Response(int id)
+        public IActionResult Response(PostViewModel model,int id)
         {
-            return View();
+            var newResponse = new Response();
+
+            var post = _postService.GetPost(id);
+
+            if (model.Content!=null)
+            {
+                
+
+                newResponse.Content = model.Content;
+                newResponse.Post = post;
+                newResponse.User = _userService.GetUser(User.Identity.Name);
+                newResponse = _responseService.AddResponseWithCommit(newResponse);
+
+                _postService.AddResponse(post,newResponse);
+
+                _ccDbContextService.Commit();
+            }
+            return RedirectToAction("Post","Home",new {id = post.Id });
         }
         [HttpPost]
         public IActionResult Share(int id)

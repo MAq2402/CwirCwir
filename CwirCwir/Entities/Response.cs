@@ -10,6 +10,7 @@ namespace CwirCwir.Entities
         public Response()
         {
             Likes = new List<Like>();
+            PostDate = DateTime.Now;
         }
         public int Id { get; set; }
         public string Content { get; set; }
@@ -18,6 +19,6 @@ namespace CwirCwir.Entities
         public User User { get; set; }
         public DateTime PostDate { get; set; }
         public int PostId { get; set; }
-        public Post Post { get; set; }
+        public virtual Post Post { get; set; }
     }
 }

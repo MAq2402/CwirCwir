@@ -9,5 +9,6 @@ namespace CwirCwir.ViewModels.Home
     public class PostViewModel
     {
         public Post post { get; set; }
+        public string Content { get; set; }
     }
 }

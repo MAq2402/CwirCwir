@@ -1,4 +1,5 @@
-﻿using CwirCwir.DbContexts;
+﻿using CwirCwir.Comparers;
+using CwirCwir.DbContexts;
 using CwirCwir.Entities;
 using CwirCwir.Services;
 using Microsoft.EntityFrameworkCore;
@@ -16,17 +17,11 @@ namespace CwirCwir.Services
         Post GetPost(int id);
         List<Post> Posts { get; }
         void AddLike(Post post,Like newLike);
+        void AddResponse(Post post, Response newResponse);
         bool CheckIfUserLikedPost(Post post,User user);
 
     }
 
-    public class DateComparer : IComparer<Post>
-    {
-        public int Compare(Post x, Post y)
-        {
-            return - x.PostDate.CompareTo(y.PostDate);
-        }
-    }
 
     public class PostService : IPostService
     {
@@ -45,7 +40,7 @@ namespace CwirCwir.Services
                                                  .Include(p=>p.Sharings)
                                                  .Include(p=>p.Responses)
                                                  .ToList();
-                posts.Sort(new DateComparer());
+                posts.Sort(new PostDateComparer());
                 return posts;
             }
         }
@@ -64,6 +59,12 @@ namespace CwirCwir.Services
                  .Add(newLike);
         }
 
+        public void AddResponse(Post post,Response newResponse)
+        {
+            Posts.FirstOrDefault(p => p.Id == post.Id)
+                  .Responses
+                  .Add(newResponse);
+        }
 
         public Post GetPost(int id)
         {
