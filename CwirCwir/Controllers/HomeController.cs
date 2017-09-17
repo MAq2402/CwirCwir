@@ -21,18 +21,21 @@ namespace CwirCwir.Controllers
         private ILikeService _likeService;
         private ICwirCwirDbContextService _ccDbContextService;
         private IResponseService _responseService;
+        private IResponseLikeService _responseLikeService;
 
         public HomeController(IPostService postService,
                                 IUserService userService,
                                 ILikeService likeService,
                                 ICwirCwirDbContextService ccDbContextService,
-                                IResponseService responseService)
+                                IResponseService responseService,
+                                IResponseLikeService responseLikeService)
         {
             _postService = postService;
             _userService = userService;
             _likeService = likeService;
             _ccDbContextService = ccDbContextService;
             _responseService = responseService;
+            _responseLikeService = responseLikeService;
             
         }
 
@@ -59,9 +62,6 @@ namespace CwirCwir.Controllers
                 var newPost = new Post();
 
                 newPost.Content = wallViewModel.Content;
-
-                
-                newPost.PostDate = DateTime.Now;
 
                 var userName = User.Identity.Name;
 
@@ -131,7 +131,33 @@ namespace CwirCwir.Controllers
             }
             return RedirectToAction("Post","Home",new {id = post.Id });
         }
+
         [HttpPost]
+        public IActionResult LikeResponse(int ResponseId,int PostId)
+        {
+            var response = _responseService.GetResponse(ResponseId);
+
+            var user = _userService.GetUser(User.Identity.Name);
+
+            if (_responseService.CheckIfUserLikedResponse(response, user))
+            {
+                return RedirectToAction("Post", "Home", new { id = PostId });
+            }
+
+            var post = _postService.GetPost(PostId);
+
+            var newLike = new ResponseLike();
+            newLike.Response = response;
+            newLike.User = user;
+
+            newLike = _responseLikeService.AddWithCommit(newLike);
+
+            _responseService.AddLike(newLike.Response, newLike);
+
+            _ccDbContextService.Commit();
+
+            return RedirectToAction("Post", "Home", new { id = PostId });
+        }
         public IActionResult Share(int id)
         {
             return View();

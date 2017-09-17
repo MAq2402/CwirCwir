@@ -1,64 +1,63 @@
 ﻿
-@inject IPostService postService
-    <div id="PostsDiv">
-        @foreach (var post in postService.Posts)
-        {
-            <div id="LinkToPostDiv">
-                <a class="LinkToPost" asp-action="Post" asp-controller="Home" asp-route-id="@post.Id">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            @post.User.UserName
-                            <span id="PostDate">@post.PostDate</span>
-                        </div>
-                        <div class=" panel-body">
-                            @post.Content;
-                        </div>
-                        <div class="panel-footer">
-                            <span class="glyphicon glyphicon-heart"></span> @post.Likes.Count
-                            <span class="glyphicon glyphicon-refresh"></span> @post.Sharings.Count
-                            <span class="glyphicon glyphicon-comment"></span> @post.Responses.Count
-                        </div>
-                    </div>
-                </a>
-            </div>
-        }
+@model Post
+<div id="PostsDiv">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            @Model.User.UserName
+            <span id="PostDate">@Model.PostDate</span>
+        </div>
+        <div class=" panel-body">
+            @Model.Content;
+        </div>
+        <div class="panel-footer">
+            <span class="glyphicon glyphicon-heart"></span> @Model.Likes.Count
+            <span class="glyphicon glyphicon-refresh"></span> @Model.Sharings.Count
+            <span class="glyphicon glyphicon-comment"></span> @Model.Responses.Count
+            <a class="LinkToPost" asp-action="Post" asp-controller="Home" asp-route-id="@Model.Id"><span class="glyphicon glyphicon-eye-open"></span></a>
+        </div>
     </div>
+</div>
 
 
 <style>
-    #PostDate
-    {
-        float:right;
+    #PostDate {
+        float: right;
     }
+
     #PostsDiv {
         width: 55%;
-        margin-left:auto;
+        margin-left: auto;
         margin-right: auto;
         margin-top: 8px;
     }
-    .glyphicon
-    {
+
+    .glyphicon {
         margin-left: 5px;
-        margin-right:5px;
+        margin-right: 5px;
     }
-    .panel:hover {
-        background-color: #5bc0de;
+
+    .glyphicon-eye-open {
+        float: right;
     }
+
     .LinkToPost {
         color: #333;
     }
-    .LinkToPost:link
-    {
-        text-decoration: none;
-    }
-    .LinkToPost:visited {
-        text-decoration: none;
-    }
+
+        .LinkToPost:link {
+            text-decoration: none;
+        }
+
+        .LinkToPost:visited {
+            text-decoration: none;
+        }
+
         .LinkToPost:hover {
             text-decoration: none;
             color: #333;
         }
-    .LinkToPost:active {
-        text-decoration: none;
-    }
+
+        .LinkToPost:active {
+            text-decoration: none;
+        }
 </style>

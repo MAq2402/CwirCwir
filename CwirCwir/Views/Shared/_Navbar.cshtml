@@ -9,14 +9,14 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a asp-controller="Home" asp-action="Wall" class="navbar-brand">Strona Główna</a>
+            <a asp-controller="Home" asp-action="Wall" class="navbar-brand">Strona Główna <span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a>Powiadomienia</a></li>
-                <li><a>Wiadomości</a></li>
+                <li><a>Powiadomienia<span class="glyphicon glyphicon-bell" aria-hidden="true"></span></a></li>
+                <li><a>Wiadomości<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a></li>
                 <li></li>
             </ul>
 
@@ -33,13 +33,19 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user-circle-o" aria-hidden="true"></i><span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a asp-action="Index" asp-controller="Profile" asp-route-id="@User.Identity.Name">@User.Identity.Name</a></li>
+                        <li id="UserName">@User.Identity.Name</li>
                         <li role="separator" class="divider"></li>
-                        <li><a>Profil</a></li>
+                        <li><a asp-action="Index" asp-controller="Profile" asp-route-id="@User.Identity.Name">Profil</a></li>
+                        <li>
+                            <form asp-controller="Account" asp-action="Logout" asp-antiforgery="true" method="post">
+                                <input class="btn-logout" type="submit" value="Wyloguj się" />
+                            </form>
+                        </li>
+                        </ul>
                 </li>
-                <form asp-controller="Account" asp-action="Logout" asp-antiforgery="true" method="post">
-                    <input class="btn-logout" type="submit" value="Wyloguj się" />
-                </form>
+                
+                
+          
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -53,6 +59,12 @@
     .navbar
     {
         margin-bottom:0px
+    }
+    #UserName
+    {
+        margin-left:auto;
+        margin-right:auto;
+        text-align:center;
     }
 </style>
 

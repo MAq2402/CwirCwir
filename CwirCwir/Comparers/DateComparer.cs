@@ -17,7 +17,7 @@ namespace CwirCwir.Comparers
     {
         public int Compare(Response x, Response y)
         {
-            return -x.PostDate.CompareTo(y.PostDate);
+            return -x.ResponseDate.CompareTo(y.ResponseDate);
         }
     }
 }

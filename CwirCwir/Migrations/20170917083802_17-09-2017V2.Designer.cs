@@ -11,9 +11,10 @@ using System;
 namespace CwirCwir.Migrations
 {
     [DbContext(typeof(CwirCwirDbContext))]
-    partial class CwirCwirDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170917083802_17-09-2017V2")]
+    partial class _17092017V2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,15 +110,11 @@ namespace CwirCwir.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("PostId");
-
                     b.Property<int>("ResponseId");
 
                     b.Property<string>("UserId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PostId");
 
                     b.HasIndex("ResponseId");
 
@@ -355,11 +352,6 @@ namespace CwirCwir.Migrations
 
             modelBuilder.Entity("CwirCwir.Entities.ResponseLike", b =>
                 {
-                    b.HasOne("CwirCwir.Entities.Post", "Post")
-                        .WithMany()
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("CwirCwir.Entities.Response", "Response")
                         .WithMany("Likes")
                         .HasForeignKey("ResponseId")

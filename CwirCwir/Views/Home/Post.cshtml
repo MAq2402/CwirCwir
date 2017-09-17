@@ -8,10 +8,10 @@
     <link href="~/Styles/Home-Post.css" rel="stylesheet" />
 }
 @Html.Partial("_Navbar");
-<div class="panel panel-primary">
+<div class="panel panel-primary" id="MainPost">
     <div class="panel-heading">
         @Model.post.User.UserName
-        <span id="PostDate">@Model.post.PostDate;</span>
+        <span id="PostDate">@Model.post.PostDate</span>
     </div>
     <div class=" panel-body">
         @Model.post.Content;
@@ -32,33 +32,46 @@
                     <span class="glyphicon glyphicon-comment"></span> @Model.post.Responses.Count
                 </button>
             </form>
+        <div id="ResponseToPost">
+            <form id="PostForm" method="post" asp-antiforgery="true" asp-controller="Home" asp-action="Response" asp-route-id="@Model.post.Id">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>
+                    <input asp-for="Content" type="text" class="form-control" placeholder="Odpowiedz na ten post" aria-describedby="basic-addon1">
+                </div>
+                <div class="CwirnijBtn">
+                    <input class="btn btn-primary" type="submit" value="Odpowiedz" />
+                </div>
+                <div asp-validation-summary="All"></div>
+            </form>
+        </div>
 </div>
 </div>
-<div id="ResponseToPost">
-        <form id="PostForm" method="post" asp-antiforgery="true" asp-controller="Home" asp-action="Response" asp-route-id="@Model.post.Id">
-            <div class="input-group input-group-lg">
-                <span class="input-group-addon" id="basic-addon1"><i class="fa fa-user-circle-o" aria-hidden="true"></i></span>
-                <input asp-for="Content" type="text" class="form-control" placeholder="Co się dzieje?" aria-describedby="basic-addon1">
-            </div>
-            <div class="CwirnijBtn">
-                <input class="btn btn-primary" type="submit" value="Ćwirnij" />
-            </div>
-            <div asp-validation-summary="All"></div>
-        </form>
-</div>
-@foreach (var response in Model.post.Responses)
+
+@foreach (var response in postService.GetResponses(Model.post))
 {
+           var dict =
+            new Dictionary<string, string>
+            {
+                {"ResponseId", response.Id.ToString() },
+                {"PostId",Model.post.Id.ToString() }
+
+            };
+ 
     <div id="LinkToPostDiv">
-            <div class="panel panel-primary">
+            <div class="panel panel-info Response-panel">
                 <div class="panel-heading">
                     @response.User.UserName
-                    <span id="PostDate">@response.PostDate</span>
+                    <span id="PostDate">@response.ResponseDate</span>
                 </div>
                 <div class=" panel-body">
                     @response.Content;
                 </div>
                 <div class="panel-footer">
-                    <span class="glyphicon glyphicon-heart"></span> @response.Likes.Count
+                    <form method="post" asp-action="LikeResponse" asp-controller="Home"  asp-all-route-data="dict">
+                        <button type="submit" class="btn btn-deafult">
+                            <span class="glyphicon glyphicon-heart"></span> @response.Likes.Count
+                        </button>
+                    </form>
                 </div>
             </div>
     </div>

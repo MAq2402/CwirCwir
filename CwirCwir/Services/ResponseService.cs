@@ -13,6 +13,9 @@ namespace CwirCwir.Services
     {
         Response AddResponseWithCommit(Response newResponse);
         List<Response> responses { get; }
+        void AddLike(Response response, ResponseLike newLike);
+        Response GetResponse(int id);
+        bool CheckIfUserLikedResponse(Response response,User user);
 
     }
 
@@ -40,11 +43,32 @@ namespace CwirCwir.Services
             }
         }
 
+        public void AddLike(Response response, ResponseLike newLike)
+        {
+            responses.FirstOrDefault(r => r.Id == response.Id)
+                     .Likes
+                     .Add(newLike);
+        }
+
         public Response AddResponseWithCommit(Response newResponse)
         {
             _context.Add(newResponse);
             _context.SaveChanges();
             return newResponse;
+        }
+
+        public bool CheckIfUserLikedResponse(Response response,User user)
+        {
+            if(response.Likes.Any(l=>l.User==user))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public Response GetResponse(int id)
+        {
+            return responses.FirstOrDefault(r => r.Id == id);
         }
     }
 }

@@ -17,43 +17,4 @@ h1
     width: 100%;
     text-align: center;
 }
-#PostDate {
-    float: right;
-}
 
-#PostsDiv {
-    width: 55%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 8px;
-}
-
-.glyphicon {
-    margin-left: 5px;
-    margin-right: 5px;
-}
-
-.panel:hover {
-    background-color: #5bc0de;
-}
-
-.LinkToPost {
-    color: #333;
-}
-
-    .LinkToPost:link {
-        text-decoration: none;
-    }
-
-    .LinkToPost:visited {
-        text-decoration: none;
-    }
-
-    .LinkToPost:hover {
-        text-decoration: none;
-        color: #333;
-    }
-
-    .LinkToPost:active {
-        text-decoration: none;
-    }

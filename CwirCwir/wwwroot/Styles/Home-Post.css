@@ -10,21 +10,19 @@
 }
 
 .panel {
-    width: 80%;
+    width: 55%;
     margin-left: auto;
     margin-right: auto;
 }
-
+.MainPost {
+    background-color: #FFD700;
+}
 form {
     display: inline;
 }
 #ResponseToPost {
-    background-color: #4099FF;
-    padding: 20px;
-    width: 55%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 0px;
+    display: inline;
+    width: 40%;
 }
 
 .btn-primary {
@@ -36,3 +34,8 @@ form {
 .CwirnijBtn {
     text-align: right;
 }
+.Response-panel
+{
+    width:55%;
+}
+

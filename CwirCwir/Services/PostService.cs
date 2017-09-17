@@ -18,7 +18,10 @@ namespace CwirCwir.Services
         List<Post> Posts { get; }
         void AddLike(Post post,Like newLike);
         void AddResponse(Post post, Response newResponse);
+        void AddLikeToResponse(Post post, Response response, ResponseLike responseLike);
         bool CheckIfUserLikedPost(Post post,User user);
+
+        IEnumerable<Response> GetResponses(Post post);
 
     }
 
@@ -26,9 +29,12 @@ namespace CwirCwir.Services
     public class PostService : IPostService
     {
         private CwirCwirDbContext _context;
-        public PostService(CwirCwirDbContext context)
+        private IResponseService _responseService;
+
+        public PostService(CwirCwirDbContext context, IResponseService responseService)
         {
             _context = context;
+            _responseService = responseService;
         }
 
         public List<Post> Posts
@@ -65,6 +71,12 @@ namespace CwirCwir.Services
                   .Responses
                   .Add(newResponse);
         }
+        public void AddLikeToResponse(Post post, Response response, ResponseLike responseLike)
+        {
+            Posts.FirstOrDefault(p => p.Id == post.Id)
+                 .Responses.FirstOrDefault(r => r.Id == response.Id)
+                 .Likes.Add(responseLike);
+        }
 
         public Post GetPost(int id)
         {
@@ -78,6 +90,10 @@ namespace CwirCwir.Services
                 return true;
             }
             return false;
+        }
+        public IEnumerable<Response> GetResponses(Post post)
+        {
+            return _responseService.responses.Where(r => r.PostId == post.Id);
         }
     }
 }
