@@ -11,12 +11,16 @@ namespace CwirCwir.Entities
         public Message()
         {
             MessageDate = DateTime.Now;
+            IsRead = false;
         }
         public int Id { get; set; }
         public string Content { get; set; }
-        public virtual User User { get; set; }
-        public string UserId { get; set; }
+        public virtual User UserSender { get; set; }
+        public string UserSenderId { get; set; }
+        public virtual User UserReceiver { get; set; }
+        public string UserReceiverId { get; set; }
         public DateTime MessageDate { get; set; }
+        public bool IsRead { get; set; }
 
     }
 }

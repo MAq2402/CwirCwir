@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CwirCwir.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CwirCwir.Controllers
 {
+    [Authorize]
     public class ProfileController : Controller
     {
         private IUserService _userService;
@@ -15,9 +17,9 @@ namespace CwirCwir.Controllers
         {
             _userService = userService;
         }
-        public IActionResult Index(string id)
+        public IActionResult Index(string name)
         {
-            var user = _userService.GetUser(id);
+            var user = _userService.GetUser(name);
 
             return View(user);
         }

@@ -49,13 +49,19 @@ namespace CwirCwir.Migrations
 
                     b.Property<string>("Content");
 
+                    b.Property<bool>("IsRead");
+
                     b.Property<DateTime>("MessageDate");
 
-                    b.Property<string>("UserId");
+                    b.Property<string>("UserReceiverId");
+
+                    b.Property<string>("UserSenderId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserReceiverId");
+
+                    b.HasIndex("UserSenderId");
 
                     b.ToTable("Messages");
                 });
@@ -109,15 +115,11 @@ namespace CwirCwir.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("PostId");
-
                     b.Property<int>("ResponseId");
 
                     b.Property<string>("UserId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PostId");
 
                     b.HasIndex("ResponseId");
 
@@ -325,9 +327,13 @@ namespace CwirCwir.Migrations
 
             modelBuilder.Entity("CwirCwir.Entities.Message", b =>
                 {
-                    b.HasOne("CwirCwir.Entities.User", "User")
-                        .WithMany("Messages")
-                        .HasForeignKey("UserId");
+                    b.HasOne("CwirCwir.Entities.User", "UserReceiver")
+                        .WithMany("ReceivedMessages")
+                        .HasForeignKey("UserReceiverId");
+
+                    b.HasOne("CwirCwir.Entities.User", "UserSender")
+                        .WithMany("SentMessages")
+                        .HasForeignKey("UserSenderId");
                 });
 
             modelBuilder.Entity("CwirCwir.Entities.Post", b =>
@@ -355,11 +361,6 @@ namespace CwirCwir.Migrations
 
             modelBuilder.Entity("CwirCwir.Entities.ResponseLike", b =>
                 {
-                    b.HasOne("CwirCwir.Entities.Post", "Post")
-                        .WithMany()
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("CwirCwir.Entities.Response", "Response")
                         .WithMany("Likes")
                         .HasForeignKey("ResponseId")

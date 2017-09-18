@@ -16,7 +16,7 @@
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li><a>Powiadomienia<span class="glyphicon glyphicon-bell" aria-hidden="true"></span></a></li>
-                <li><a>Wiadomości<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a></li>
+                <li><a asp-action="Index" asp-controller="Message" asp-route-name="@User.Identity.Name">Wiadomości<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a></li>
                 <li></li>
             </ul>
 
@@ -35,7 +35,7 @@
                     <ul class="dropdown-menu">
                         <li id="UserName">@User.Identity.Name</li>
                         <li role="separator" class="divider"></li>
-                        <li><a asp-action="Index" asp-controller="Profile" asp-route-id="@User.Identity.Name">Profil</a></li>
+                        <li><a asp-action="Index" asp-controller="Profile" asp-route-name="@User.Identity.Name">Profil</a></li>
                         <li>
                             <form asp-controller="Account" asp-action="Logout" asp-antiforgery="true" method="post">
                                 <input class="btn-logout" type="submit" value="Wyloguj się" />

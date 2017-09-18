@@ -63,12 +63,16 @@ namespace CwirCwir.Controllers
 
                 newPost.Content = wallViewModel.Content;
 
-                var userName = User.Identity.Name;
+                var user = _userService.GetUser(User.Identity.Name);
 
-                newPost.User = _userService.GetUser(userName);
+                newPost.User = user;
 
                 newPost = _postService.AddWithCommit(newPost);
 
+                _userService.AddPost(user, newPost);
+
+                _ccDbContextService.Commit();
+           
                 return RedirectToAction("Wall","Home");
             }
             return View();
@@ -110,17 +114,17 @@ namespace CwirCwir.Controllers
             return RedirectToAction("Post","Home",new { id=id});
         }
         [HttpPost]
-        public IActionResult Response(PostViewModel model,int id)
+        public IActionResult Response(PostViewModel postViewModel,int id)
         {
             var newResponse = new Response();
 
             var post = _postService.GetPost(id);
 
-            if (model.Content!=null)
+            if (postViewModel.Content!=null)
             {
                 
 
-                newResponse.Content = model.Content;
+                newResponse.Content = postViewModel.Content;
                 newResponse.Post = post;
                 newResponse.User = _userService.GetUser(User.Identity.Name);
                 newResponse = _responseService.AddResponseWithCommit(newResponse);

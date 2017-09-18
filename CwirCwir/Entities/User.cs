@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CwirCwir.Entities
 {
@@ -12,15 +13,14 @@ namespace CwirCwir.Entities
         public User()
         {
             Posts = new List<Post>();
-            Messages = new List<Message>();
+            ReceivedMessages = new List<Message>();
+            SentMessages = new List<Message>();
         }
         
         public virtual List<Post> Posts { get; set; }
-        public virtual List<Message> Messages { get; set; }
-
-
-        /*public virtual List<User> FollowedUsers { get; set; }
-        public virtual List<User> UserFollowers { get; set; }*/
-
+        [InverseProperty("UserReceiver")]
+        public virtual List<Message> ReceivedMessages { get; set; }
+        [InverseProperty("UserSender")]
+        public virtual List<Message> SentMessages { get; set; }
     }
 }
