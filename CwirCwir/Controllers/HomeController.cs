@@ -54,6 +54,28 @@ namespace CwirCwir.Controllers
         {
             return View();
         }
+
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public IActionResult FindUser(string searchString)
+        {
+            var users = _userService.Users;
+
+            if(!String.IsNullOrEmpty(searchString))
+            {
+                searchString = searchString.ToLower();
+
+                users = users.Where(u => u.UserName.ToLower().Contains(searchString));
+
+                var model = new FindUserViewModel();
+
+                model.Users = users;
+
+                return View(model);
+            }
+
+            return RedirectToAction("Wall", "Home");
+        }
         [HttpPost, ValidateAntiForgeryToken]
         public IActionResult Wall(WallViewModel wallViewModel)
         {
@@ -162,10 +184,7 @@ namespace CwirCwir.Controllers
 
             return RedirectToAction("Post", "Home", new { id = PostId });
         }
-        public IActionResult Share(int id)
-        {
-            return View();
-        }
+     
 
     } 
 

@@ -1,0 +1,22 @@
+﻿@model FindUserViewModel
+@{ 
+    ViewBag.Title = "Wyniki wyszukiwania";
+}
+@section Styles
+{
+<link href="~/Styles/Home-FindUser.css" rel="stylesheet" />
+}
+@Html.Partial("_Navbar");
+@if (Model.Users.Any())
+{
+    <div class="list-group">
+        @foreach (var user in Model.Users)
+        {
+            <a asp-action="Index" asp-controller="Profile" asp-route-name="@user.UserName" class="list-group-item">@user.UserName</a>
+        }
+    </div>
+}
+else
+{
+    <h4>Brak wyników</h4>
+}

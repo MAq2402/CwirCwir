@@ -1,0 +1,18 @@
+﻿@model WriteViewModel
+@{ 
+    ViewBag.Title = "Wiadomość";
+}
+@section Styles
+{
+<link href="~/Styles/Message-Write.css" rel="stylesheet" />
+}
+<h1>@Model.Receiver</h1>
+<form method="post" asp-action="Write" asp-controller="Message" asp-antiforgery="true">
+    <div class="input-group">
+        <input asp-for="@Model.Content" type="text" class="form-control">
+        <span class="input-group-btn">
+            <button a class="btn btn-default" type="submit">Wyślij</button>
+        </span>
+
+    </div>
+</form>

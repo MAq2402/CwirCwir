@@ -1,4 +1,5 @@
 ﻿using CwirCwir.Services;
+using CwirCwir.ViewModels.Message;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -42,17 +43,41 @@ namespace CwirCwir.Controllers
             return View(user);
 
         }
-        public IActionResult FindUser(string name)
+        [HttpGet]
+        
+        public IActionResult Write(string Sender,string Receiver)
         {
-            return View();
+
+
+            if(Sender != User.Identity.Name)
+            {
+                return RedirectToAction("Wall", "Home");
+            }
+
+            var userSender = _userService.GetUser(Sender);
+
+            var userReceiver = _userService.GetUser(Receiver);
+
+            if(userSender==userReceiver)
+            {
+                return RedirectToAction("Wall", "Home");
+            }
+
+            var model = new WriteViewModel();
+
+            model.Sender = userSender;
+            model.Receiver = userReceiver;
+
+            return View(model);
         }
-        public IActionResult Write(string name)
+        [HttpPost, ValidateAntiForgeryToken]
+        public IActionResult Write(WriteViewModel writeViewModel)
         {
-            return View();
-        }
-        public IActionResult Send()
-        {
-            return View();
+            if(writeViewModel.Receiver==null)
+                return RedirectToAction("Wall", "Home");
+
+            
+
         }
 
 

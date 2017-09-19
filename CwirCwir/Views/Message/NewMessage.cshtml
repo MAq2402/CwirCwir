@@ -4,11 +4,11 @@
 @section Styles{ 
 <link href="~/Styles/Message-NewMessage.css" rel="stylesheet" />
 }
-        <div class="input-group">
-           
-            <input type="text" class="form-control" placeholder="Szukaj użytkownika">
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="button">Dalej</button>
-            </span>
-        </div><!-- /input-group -->
-
+<form method="post" asp-action="Write" asp-controller="Message" asp-route-Sender="@User.Identity.Name">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Szukaj użytkownika" name="Receiver">
+        <span class="input-group-btn">
+            <button class="btn btn-default" type="submit">Dalej</button>
+        </span>
+    </div>
+</form>
