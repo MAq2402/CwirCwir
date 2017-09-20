@@ -15,6 +15,8 @@ namespace CwirCwir.Services
 
         IEnumerable<User> Users { get;  }
         void AddPost(User user, Post post);
+        void AddReceivedMessage(Message message, User user);
+        void AddSentMessage(Message message, User user);
 
     }
 
@@ -35,6 +37,16 @@ namespace CwirCwir.Services
         public void AddPost(User user, Post post)
         {
             Users.FirstOrDefault(u => u.Id == user.Id).Posts.Add(post);
+        }
+
+        public void AddReceivedMessage(Message message, User user)
+        {
+            Users.FirstOrDefault(u => u.Id == user.Id).ReceivedMessages.Add(message);
+        }
+
+        public void AddSentMessage(Message message, User user)
+        {
+            Users.FirstOrDefault(u => u.Id == user.Id).SentMessages.Add(message);
         }
 
         public User GetUser(string UserName)

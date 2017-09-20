@@ -7,7 +7,15 @@
 <link href="~/Styles/Message-Write.css" rel="stylesheet" />
 }
 <h1>@Model.Receiver</h1>
-<form method="post" asp-action="Write" asp-controller="Message" asp-antiforgery="true">
+@{ 
+    var dict = new Dictionary<string, string>
+    {
+        {"Receiver", Model.Receiver.UserName },
+        {"Sender", Model.Sender.UserName },
+
+    };
+}
+<form method="post" asp-action="Send" asp-controller="Message" asp-all-route-data="dict" asp-antiforgery="true">
     <div class="input-group">
         <input asp-for="@Model.Content" type="text" class="form-control">
         <span class="input-group-btn">

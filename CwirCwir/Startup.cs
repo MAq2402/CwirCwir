@@ -45,6 +45,7 @@ namespace CwirCwir
             services.AddTransient<ILikeService, LikeService>();
             services.AddTransient<IResponseService, ResponseService>();
             services.AddTransient<IResponseLikeService, ResponseLikeService>();
+            services.AddTransient<IMessageService, MessageService>();
             services.AddTransient<ICwirCwirDbContextService, CwirCwirDbContextService>();
             services.AddDbContext<CwirCwirDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("CwirCwir")));
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<CwirCwirDbContext>();

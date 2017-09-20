@@ -1,4 +1,5 @@
-﻿using CwirCwir.Services;
+﻿using CwirCwir.Entities;
+using CwirCwir.Services;
 using CwirCwir.ViewModels.Message;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +14,14 @@ namespace CwirCwir.Controllers
     public class MessageController:Controller
     {
         private IUserService _userService;
+        private IMessageService _messageService;
+        private ICwirCwirDbContextService _ccDbContextService;
 
-        public MessageController(IUserService userService)
+        public MessageController(IUserService userService,IMessageService messageService,ICwirCwirDbContextService ccDbContextService)
         {
             _userService = userService;
+            _messageService = messageService;
+            _ccDbContextService = ccDbContextService;
         }
         public IActionResult Index(string name)
         {
@@ -43,7 +48,7 @@ namespace CwirCwir.Controllers
             return View(user);
 
         }
-        [HttpGet]
+        
         
         public IActionResult Write(string Sender,string Receiver)
         {
@@ -71,13 +76,43 @@ namespace CwirCwir.Controllers
             return View(model);
         }
         [HttpPost, ValidateAntiForgeryToken]
-        public IActionResult Write(WriteViewModel writeViewModel)
+        public IActionResult Send(WriteViewModel writeViewModel,string Sender,string Receiver)
         {
-            if(writeViewModel.Receiver==null)
+            if(Sender!=User.Identity.Name)
+            {
                 return RedirectToAction("Wall", "Home");
+            }
+
+            if (String.IsNullOrEmpty(Sender))
+                throw new Exception("No sender");
+
+            if (String.IsNullOrEmpty(Receiver))
+                throw new Exception("No receiver");
+
+            if (String.IsNullOrEmpty(writeViewModel.Content))
+            {
+                return RedirectToAction("Message", "Write", new { Sender = Sender, Receiver = Receiver });
+            }
+
+            var newMessage = new Message();
+
+            var userReceiver = _userService.GetUser(Receiver);
+            var userSender = _userService.GetUser(Sender);
+
+            newMessage.Content = writeViewModel.Content;
+            newMessage.UserReceiver = userReceiver;
+            newMessage.UserSender = userSender;
+
+            newMessage = _messageService.AddMessageWithCommit(newMessage);
+
+            _userService.AddReceivedMessage(newMessage, userReceiver);
+            _userService.AddSentMessage(newMessage, userSender);
+
+            _ccDbContextService.Commit();
+
+            return RedirectToAction("Index", "Message", new { name = Sender });
 
             
-
         }
 
 
