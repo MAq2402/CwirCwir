@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using static Microsoft.AspNetCore.Hosting.Internal.HostingApplication;
+using CwirCwir.Comparers;
 
 namespace CwirCwir.Controllers
 {
@@ -52,7 +53,11 @@ namespace CwirCwir.Controllers
         [HttpGet]
         public IActionResult Wall()
         {
-            return View();
+            var model = new WallViewModel();
+
+            model.Posts = _postService.Posts;
+
+            return View(model);
         }
 
 
@@ -79,31 +84,42 @@ namespace CwirCwir.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public IActionResult Wall(WallViewModel wallViewModel)
         {
-            if (wallViewModel.Content!=null)
+            if(!ModelState.IsValid)
             {
-                var newPost = new Post();
+                wallViewModel.Posts = _postService.Posts;
 
-                newPost.Content = wallViewModel.Content;
-
-                var user = _userService.GetUser(User.Identity.Name);
-
-                newPost.User = user;
-
-                newPost = _postService.AddWithCommit(newPost);
-
-                _userService.AddPost(user, newPost);
-
-                _ccDbContextService.Commit();
-           
-                return RedirectToAction("Wall","Home");
+                return View(wallViewModel);
             }
-            return View();
+
+            var newPost = new Post();
+
+            newPost.Content = wallViewModel.Content;
+
+            var user = _userService.GetUser(User.Identity.Name);
+
+            newPost.User = user;
+
+            newPost = _postService.AddWithCommit(newPost);
+
+            _userService.AddPost(user, newPost);
+
+            _ccDbContextService.Commit();
+
+            wallViewModel.Posts = _postService.Posts;
+
+            return View(wallViewModel);
 
         }
+        [HttpGet]
         public IActionResult Post(int id)
         {
             var model = new PostViewModel();
-            model.post = _postService.GetPost(id);
+
+            var post = _postService.GetPost(id);
+
+            model.post = post;
+
+            model.Responses = _postService.GetResponses(post);
 
             return View(model);
         }
@@ -135,27 +151,37 @@ namespace CwirCwir.Controllers
 
             return RedirectToAction("Post","Home",new { id=id});
         }
-        [HttpPost]
-        public IActionResult Response(PostViewModel postViewModel,int id)
+        [HttpPost,ValidateAntiForgeryToken]
+        public IActionResult Post(PostViewModel postViewModel,int id)
         {
-            var newResponse = new Response();
+            
 
             var post = _postService.GetPost(id);
 
-            if (postViewModel.Content!=null)
+           postViewModel.post = post;        
+
+            if (!ModelState.IsValid)
             {
-                
+                postViewModel.Responses = _postService.GetResponses(post);
 
-                newResponse.Content = postViewModel.Content;
-                newResponse.Post = post;
-                newResponse.User = _userService.GetUser(User.Identity.Name);
-                newResponse = _responseService.AddResponseWithCommit(newResponse);
-
-                _postService.AddResponse(post,newResponse);
-
-                _ccDbContextService.Commit();
+                return View(postViewModel);
             }
-            return RedirectToAction("Post","Home",new {id = post.Id });
+
+            var newResponse = new Response();
+
+
+            newResponse.Content = postViewModel.Content;
+            newResponse.Post = post;
+            newResponse.User = _userService.GetUser(User.Identity.Name);
+            newResponse = _responseService.AddResponseWithCommit(newResponse);
+
+            _postService.AddResponse(post, newResponse);
+
+            _ccDbContextService.Commit();
+
+            postViewModel.Responses = _postService.GetResponses(post); // zeby nowa odpowiedz byla zawarta
+
+            return View(postViewModel);
         }
 
         [HttpPost]

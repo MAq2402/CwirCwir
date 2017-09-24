@@ -20,4 +20,11 @@ namespace CwirCwir.Comparers
             return -x.ResponseDate.CompareTo(y.ResponseDate);
         }
     }
+    public class MessageDateComparer : IComparer<Message>
+    {
+        public int Compare(Message x, Message y)
+        {
+            return -x.MessageDate.CompareTo(y.MessageDate);
+        }
+    }
 }

@@ -20,4 +20,8 @@
 {
     text-align:right;
 }
+#ValSum ul {
+    color: #990000;
+    list-style-type: none;
+}
 

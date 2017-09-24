@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CwirCwir.ViewModels.MessageViewModels
+namespace CwirCwir.ViewModels.Message
 {
     public class IndexViewModel
     {
         public User user { get; set; }
-        public List<Message> Messages { get; set; }
+        public List<CwirCwir.Entities.Message> Messages { get; set; }
     }
 }

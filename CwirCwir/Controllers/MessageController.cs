@@ -31,25 +31,27 @@ namespace CwirCwir.Controllers
                 return RedirectToAction("Wall", "Home");
             }
 
-            var user = _userService.GetUser(name);
+            var model = new IndexViewModel
+            {
+                user = _userService.GetUser(name),
+                Messages = _messageService.Messages
+            };
 
-
-            return View(user);
+            return View(model);
         }
-        public IActionResult NewMessage(string name)
+
+        public IActionResult FindUser(string name)
         {
             if (name != User.Identity.Name)
             {
                 return RedirectToAction("Wall", "Home");
             }
 
-            var user = _userService.GetUser(name);
-
-            return View(user);
+            return View();
 
         }
         
-        
+        [HttpGet]
         public IActionResult Write(string Sender,string Receiver)
         {
 
@@ -59,24 +61,48 @@ namespace CwirCwir.Controllers
                 return RedirectToAction("Wall", "Home");
             }
 
-            var userSender = _userService.GetUser(Sender);
+            if(String.IsNullOrEmpty(Receiver))
+            {
+
+                /*ModelState.AddModelError("", "Wpisz w pole tekstowe nazwe użytkownika, do którego chcesz napisać wiadomość.");
+
+                return RedirectToAction("FindUser", "Message", new { name = Sender });*/
+
+                return RedirectToAction("Wall", "Home");
+                //Dodac strone brak wynikow czy cos takiego
+
+            }
 
             var userReceiver = _userService.GetUser(Receiver);
 
-            if(userSender==userReceiver)
+            if(userReceiver == null)
             {
                 return RedirectToAction("Wall", "Home");
+                //Dodac strone brak wynikow czy cos takiego
             }
 
-            var model = new WriteViewModel();
+            var userSender = _userService.GetUser(Sender);          
 
-            model.Sender = userSender;
-            model.Receiver = userReceiver;
+            if(userSender.Id==userReceiver.Id)
+            {
+                /*ModelState.AddModelError("", "Nie możesz wysłać wiadomości do samego siebie.");
+
+                return RedirectToAction("FindUser", "Message", new { name = Sender });*/
+
+                return RedirectToAction("Wall", "Home");
+                //Dodac strone brak wynikow czy cos takiego
+            }
+
+            var model = new WriteViewModel
+            {
+                Sender = userSender,
+                Receiver = userReceiver
+            };
 
             return View(model);
         }
         [HttpPost, ValidateAntiForgeryToken]
-        public IActionResult Send(WriteViewModel writeViewModel,string Sender,string Receiver)
+        public IActionResult Write(WriteViewModel writeViewModel,string Sender,string Receiver)
         {
             if(Sender!=User.Identity.Name)
             {

@@ -38,4 +38,8 @@ form {
 {
     width:55%;
 }
+#ValSum ul {
+    color: #ff3333;
+    list-style-type:none;
+}
 

@@ -1,5 +1,4 @@
 ﻿@model WallViewModel
-@inject IPostService postService
 @{
     ViewBag.Title = "Cwir Cwir";
 }
@@ -16,11 +15,15 @@
         </div>
         <div class="CwirnijBtn">
             <input class="btn btn-primary" type="submit" value="Ćwirnij" />
+           
+        </div>
+        <div id="ValSum" asp-validation-summary="All">
+
         </div>
     </form>
 </div>
 
-@foreach (var post in postService.Posts)
+@foreach (var post in Model.Posts)
 {
     @Html.Partial("_Posts", post);
 }

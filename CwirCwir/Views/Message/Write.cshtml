@@ -7,13 +7,13 @@
 <link href="~/Styles/Message-Write.css" rel="stylesheet" />
 }
 <h1>@Model.Receiver</h1>
-@{ 
-    var dict = new Dictionary<string, string>
-    {
-        {"Receiver", Model.Receiver.UserName },
-        {"Sender", Model.Sender.UserName },
+@{
+        var dict = new Dictionary<string, string>
+        {
+            {"Receiver", Model.Receiver.UserName },
+            {"Sender", Model.Sender.UserName },
 
-    };
+        };
 }
 <form method="post" asp-action="Send" asp-controller="Message" asp-all-route-data="dict" asp-antiforgery="true">
     <div class="input-group">
@@ -21,6 +21,7 @@
         <span class="input-group-btn">
             <button a class="btn btn-default" type="submit">Wyślij</button>
         </span>
-
     </div>
 </form>
+
+   

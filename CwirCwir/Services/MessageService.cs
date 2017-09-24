@@ -1,5 +1,7 @@
-﻿using CwirCwir.DbContexts;
+﻿using CwirCwir.Comparers;
+using CwirCwir.DbContexts;
 using CwirCwir.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +24,22 @@ namespace CwirCwir.Services
         {
             _context = context;
         }
-        public List<Message> Messages => throw new NotImplementedException();
+        public List<Message> Messages
+        {
+            get
+            {
+                var messages = new List<Message>();
+
+                messages = _context.Messages.Include(m => m.UserReceiver)
+                                            .Include(m => m.UserSender)
+                                            .ToList();
+
+                messages.Sort(new MessageDateComparer());
+
+                return messages;
+                                            
+            }
+        }
 
         public Message AddMessageWithCommit(Message newMessage)
         {

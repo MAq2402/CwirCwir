@@ -10,9 +10,9 @@ namespace CwirCwir.ViewModels.Home
 {
     public class WallViewModel
     {
-        [Display(Name = "Ćwirnij coś"), MaxLength(150), MinLength(1)]
+        [Display(Name = "Ćwirnij coś"), MaxLength(150,ErrorMessage ="Maksymalna dlugość wynosi 150 znaków"),Required(ErrorMessage ="Twój post jest pusty.")]
         public string Content { get; set; }
-        List<Post> Posts { get; set; }
+        public List<Post> Posts { get; set; }
 
 
     }
