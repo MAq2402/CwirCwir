@@ -1,4 +1,4 @@
-﻿using CwirCwir.Comparers;
+﻿
 using CwirCwir.DbContexts;
 using CwirCwir.Entities;
 using CwirCwir.Services;
@@ -42,11 +42,12 @@ namespace CwirCwir.Services
             get
             {
                 List<Post> posts = _context.Posts.Include(p => p.User)
-                                                 .Include(p=>p.Likes)
-                                                 .Include(p=>p.Sharings)
-                                                 .Include(p=>p.Responses)
+                                                 .Include(p => p.Likes)
+                                                 .Include(p => p.Sharings)
+                                                 .Include(p => p.Responses)
+                                                 .OrderByDescending(p => p.PostDate)
                                                  .ToList();
-                posts.Sort(new PostDateComparer());
+
                 return posts;
             }
         }

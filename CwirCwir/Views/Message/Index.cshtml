@@ -15,15 +15,15 @@
 <div class="list-group">
     @foreach (var message in Model.Messages)
     {
-        @{ 
+        
             var dict = new Dictionary<string, string>()
             {
-                { "Sender", ""  },
+                { "userName", User.Identity.Name  },
                 {"id", message.Id.ToString() }
 
             };
-        }
-        <a asp-action="" asp-controller=""  class="list-group-item">
+        
+        <a asp-action="Conversation" asp-controller="Message" asp-all-route-data="dict"  class="list-group-item">
             @if (User.Identity.Name == message.UserSender.UserName)
             {
                 <h4 class="list-group-item-heading">Ty do @message.UserReceiver.UserName<span id="MessageDate">@message.MessageDate</span></h4>

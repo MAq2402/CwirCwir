@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace CwirCwir.ViewModels.Message
 {
-    public class ConverstationViewModel
+    public class ConversationViewModel
     {
-        public User Sender { get; set; }
+        public User User { get; set; }
+        public User Conversationalist { get; set; }
         public List<CwirCwir.Entities.Message> Messages { get; set; }
+        public string Content { get; set; }
     }
 }

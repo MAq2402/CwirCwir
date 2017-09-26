@@ -1,29 +1,46 @@
-﻿@{
+﻿@model ConversationViewModel
+@{
     ViewBag.Title = "Konwersacja";
 }
 @section Styles
     {
-
+    <link href="~/Styles/Message-Conversation.css" rel="stylesheet" />
 }
 @Html.Partial("_Navbar");
-<h3>Konwersacja z //tutaj user</h3>
+<h3>Konwersacja z @Model.Conversationalist</h3>
 <div class="list-group">
-    <h4 class="list-group-item-heading">Autor i odbiorca<span id="MessageDate">Data</span></h4>
-    <p class="list-group-item-text">Zawartość</p>
-</div>
-<!--{
-    var dict = new Dictionary<string, string>
-        {
-            {"Receiver", Model.Receiver.UserName },
-            {"Sender", Model.Sender.UserName },
+    @foreach (var message in Model.Messages)
+    {
+        <div class="list-group-item">
+            @if (User.Identity.Name == message.UserSender.UserName)
+            {
+                <p class="list-group-item-text">
+                    <b>Ty</b>: @message.Content<span id="MessageDate">@message.MessageDate</span>
+                </p>
+            }
+            else
+            {
+                <p class="list-group-item-text">
+                   <b>@message.UserSender</b>: @message.Content<span id="MessageDate">@message.MessageDate</span>
+                </p>
 
+            }
+        </div>
+    }
+</div>
+@{
+    var dict =
+        new Dictionary<string, string>
+        {
+            {"Sender",User.Identity.Name},
+            {"Receiver",Model.Conversationalist.UserName}
         };
 }
-<form method="post" asp-action="Send" asp-controller="Message" asp-all-route-data="dict" asp-antiforgery="true">
+<form method="post" asp-action="Conversation" asp-controller="Message" asp-all-route-data="dict"  asp-antiforgery="true">
     <div class="input-group">
-        <input asp-for="//Model.Content" type="text" class="form-control">
+        <input asp-for="@Model.Content" type="text" class="form-control">
         <span class="input-group-btn">
             <button a class="btn btn-default" type="submit">Wyślij</button>
         </span>
     </div>
-</form>-->
+</form>

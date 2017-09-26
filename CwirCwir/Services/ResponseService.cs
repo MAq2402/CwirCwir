@@ -1,4 +1,4 @@
-﻿using CwirCwir.Comparers;
+﻿
 using CwirCwir.DbContexts;
 using CwirCwir.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -36,8 +36,9 @@ namespace CwirCwir.Services
                 List<Response> responses = _context.Responses.Include(r => r.Likes)
                                                    .Include(r => r.Post)
                                                    .Include(r => r.User)
+                                                   .OrderByDescending(r => r.ResponseDate)
                                                    .ToList();
-                responses.Sort(new ResponseDateComparer());
+                
                 return responses;
                 
             }

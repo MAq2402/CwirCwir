@@ -40,13 +40,13 @@ namespace CwirCwir
         {
             services.AddMvc();
             services.AddSingleton(Configuration);
-            services.AddTransient<IPostService, PostService>();
-            services.AddTransient<IUserService, UserService>();
-            services.AddTransient<ILikeService, LikeService>();
-            services.AddTransient<IResponseService, ResponseService>();
-            services.AddTransient<IResponseLikeService, ResponseLikeService>();
-            services.AddTransient<IMessageService, MessageService>();
-            services.AddTransient<ICwirCwirDbContextService, CwirCwirDbContextService>();
+            services.AddScoped<IPostService, PostService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ILikeService, LikeService>();
+            services.AddScoped<IResponseService, ResponseService>();
+            services.AddScoped<IResponseLikeService, ResponseLikeService>();
+            services.AddScoped<IMessageService, MessageService>();
+            services.AddScoped<ICwirCwirDbContextService, CwirCwirDbContextService>();
             services.AddDbContext<CwirCwirDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("CwirCwir")));
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<CwirCwirDbContext>();
         }

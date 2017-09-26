@@ -1,4 +1,4 @@
-﻿using CwirCwir.Comparers;
+﻿
 using CwirCwir.DbContexts;
 using CwirCwir.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -34,9 +34,10 @@ namespace CwirCwir.Services
 
                 messages = _context.Messages.Include(m => m.UserReceiver)
                                             .Include(m => m.UserSender)
+                                            .OrderByDescending(m => m.MessageDate)
                                             .ToList();
 
-                messages.Sort(new MessageDateComparer());
+                //messages.Sort(new MessageDateComparer());
 
                 return messages;
                                             

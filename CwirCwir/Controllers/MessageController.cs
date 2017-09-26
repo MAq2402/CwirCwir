@@ -66,13 +66,7 @@ namespace CwirCwir.Controllers
 
             if(String.IsNullOrEmpty(Receiver))
             {
-
-                /*ModelState.AddModelError("", "Wpisz w pole tekstowe nazwe użytkownika, do którego chcesz napisać wiadomość.");
-
-                return RedirectToAction("FindUser", "Message", new { name = Sender });*/
-
-                return RedirectToAction("Wall", "Home");
-                //Dodac strone brak wynikow czy cos takiego
+                return RedirectToAction("LackOfResults", "Message");
 
             }
 
@@ -80,20 +74,15 @@ namespace CwirCwir.Controllers
 
             if(userReceiver == null)
             {
-                return RedirectToAction("Wall", "Home");
-                //Dodac strone brak wynikow czy cos takiego
+                return RedirectToAction("LackOfResults", "Message");
+
             }
 
             var userSender = _userService.GetUser(Sender);          
 
             if(userSender.Id==userReceiver.Id)
             {
-                /*ModelState.AddModelError("", "Nie możesz wysłać wiadomości do samego siebie.");
-
-                return RedirectToAction("FindUser", "Message", new { name = Sender });*/
-
-                return RedirectToAction("Wall", "Home");
-                //Dodac strone brak wynikow czy cos takiego
+                return RedirectToAction("LackOfResults", "Message");
             }
 
             var model = new WriteViewModel
@@ -130,10 +119,16 @@ namespace CwirCwir.Controllers
 
             _ccDbContextService.Commit();
 
-            return RedirectToAction("Index", "Message", new { name = Sender });
+            return RedirectToAction("Conversation", "Message", new { userName = Sender, id=newMessage.Id });
 
             
         }
+        public IActionResult LackOfResults()
+        {
+            return View();
+        }
+
+        [HttpGet]
 
         public IActionResult Conversation(string userName,int id)
         {
@@ -146,37 +141,46 @@ namespace CwirCwir.Controllers
 
             var message = _messageService.GetMessage(id);
 
-            var model = new ConverstationViewModel();
+            var model = new ConversationViewModel();
 
-            //model.Sender = user;
+            var AllMessages = _messageService.Messages;
 
-                
-
-                ////messages = user.sentmessages
-                ////                            .where(m => m.userreceiver.id == message.userreceiver.id)
-                ////                            .concat(
-                ////                                   user.receivedmessages.where(m => m.usersender.id == message.usersender.id)
-                ////                                   ).tolist()
 
             if(message.UserReceiver.Id==user.Id)
             {
-                //tutaj troche inaczej wiesz o co cho zią:)
+                model.Conversationalist = message.UserSender;
             }
             else if(message.UserSender.Id == user.Id)
             {
-                model.Messages = user.SentMessages
-                                           .Where(m => m.UserReceiver.Id == message.UserReceiver.Id)
-                                            .Concat(
-                                                   user.ReceivedMessages.Where(m => m.UserSender.Id == message.UserSender.Id)
-                                                   ).ToList();
+                model.Conversationalist = message.UserReceiver;
+
             }
             else
             {
                 throw new Exception("User z tą wiadomością nie ma nic wspólnego");
             }
 
+            model.Messages = AllMessages.Where(
+                    m => m.UserReceiver.Id == message.UserReceiver.Id && m.UserSender.Id == message.UserSenderId
+                    || m.UserSender.Id == message.UserReceiver.Id && m.UserReceiver.Id == message.UserSender.Id )
+                    .ToList();
+
+
 
             return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Conversation(string Sender, string Receiver,ConversationViewModel conversationViewModel)
+        {
+            var model = new WriteViewModel()
+            {
+                Sender = _userService.GetUser(Sender),
+                Receiver = _userService.GetUser(Receiver),
+                Content = conversationViewModel.Content
+            };
+
+            return Send(model, Sender, Receiver);
         }
 
 
