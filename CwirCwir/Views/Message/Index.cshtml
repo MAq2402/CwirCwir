@@ -15,9 +15,26 @@
 <div class="list-group">
     @foreach (var message in Model.Messages)
     {
+        @{ 
+            var dict = new Dictionary<string, string>()
+            {
+                { "Sender", ""  },
+                {"id", message.Id.ToString() }
+
+            };
+        }
         <a asp-action="" asp-controller=""  class="list-group-item">
-            <h4 class="list-group-item-heading">Autor: @message.UserSender<span id="MessageDate">@message.MessageDate</span></h4>
-            <p class="list-group-item-text">@message.Content.Take(10) ...</p>
+            @if (User.Identity.Name == message.UserSender.UserName)
+            {
+                <h4 class="list-group-item-heading">Ty do @message.UserReceiver.UserName<span id="MessageDate">@message.MessageDate</span></h4>
+            }
+            else
+            {
+                <h4 class="list-group-item-heading">@message.UserSender.UserName do Ciebie<span id="MessageDate">@message.MessageDate</span></h4>
+
+            }
+
+            <p class="list-group-item-text">@message.Content</p>
         </a>
     }
 

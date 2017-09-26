@@ -31,10 +31,14 @@ namespace CwirCwir.Controllers
                 return RedirectToAction("Wall", "Home");
             }
 
+            var user = _userService.GetUser(name);
+
             var model = new IndexViewModel
             {
-                user = _userService.GetUser(name),
+                user = user,
                 Messages = _messageService.Messages
+                                          .Where(m=>m.UserReceiver.Id==user.Id || m.UserSender.Id==user.Id)
+                                          .ToList()
             };
 
             return View(model);
@@ -50,8 +54,7 @@ namespace CwirCwir.Controllers
             return View();
 
         }
-        
-        [HttpGet]
+       
         public IActionResult Write(string Sender,string Receiver)
         {
 
@@ -101,24 +104,15 @@ namespace CwirCwir.Controllers
 
             return View(model);
         }
-        [HttpPost, ValidateAntiForgeryToken]
-        public IActionResult Write(WriteViewModel writeViewModel,string Sender,string Receiver)
+        public IActionResult Send(WriteViewModel writeViewModel,string Sender,string Receiver)
         {
             if(Sender!=User.Identity.Name)
             {
                 return RedirectToAction("Wall", "Home");
             }
 
-            if (String.IsNullOrEmpty(Sender))
-                throw new Exception("No sender");
-
             if (String.IsNullOrEmpty(Receiver))
                 throw new Exception("No receiver");
-
-            if (String.IsNullOrEmpty(writeViewModel.Content))
-            {
-                return RedirectToAction("Message", "Write", new { Sender = Sender, Receiver = Receiver });
-            }
 
             var newMessage = new Message();
 
@@ -139,6 +133,50 @@ namespace CwirCwir.Controllers
             return RedirectToAction("Index", "Message", new { name = Sender });
 
             
+        }
+
+        public IActionResult Conversation(string userName,int id)
+        {
+            if(userName != User.Identity.Name)
+            {
+                return RedirectToAction("Wall", "Home");
+            }
+
+            var user = _userService.GetUser(userName);
+
+            var message = _messageService.GetMessage(id);
+
+            var model = new ConverstationViewModel();
+
+            //model.Sender = user;
+
+                
+
+                ////messages = user.sentmessages
+                ////                            .where(m => m.userreceiver.id == message.userreceiver.id)
+                ////                            .concat(
+                ////                                   user.receivedmessages.where(m => m.usersender.id == message.usersender.id)
+                ////                                   ).tolist()
+
+            if(message.UserReceiver.Id==user.Id)
+            {
+                //tutaj troche inaczej wiesz o co cho zią:)
+            }
+            else if(message.UserSender.Id == user.Id)
+            {
+                model.Messages = user.SentMessages
+                                           .Where(m => m.UserReceiver.Id == message.UserReceiver.Id)
+                                            .Concat(
+                                                   user.ReceivedMessages.Where(m => m.UserSender.Id == message.UserSender.Id)
+                                                   ).ToList();
+            }
+            else
+            {
+                throw new Exception("User z tą wiadomością nie ma nic wspólnego");
+            }
+
+
+            return View(model);
         }
 
 

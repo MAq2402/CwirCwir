@@ -14,6 +14,8 @@ namespace CwirCwir.Services
         Message AddMessageWithCommit(Message newMessage);
         List<Message> Messages { get; }
 
+        Message GetMessage(int id);
+
 
     }
     public class MessageService : IMessageService
@@ -47,6 +49,12 @@ namespace CwirCwir.Services
             _context.SaveChanges();
 
             return newMessage;
+        }
+
+        public Message GetMessage(int id)
+        {
+
+            return Messages.FirstOrDefault(m => m.Id == id);
         }
     }
 }

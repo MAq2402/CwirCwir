@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Konwersacja";
+}
+@section Styles
+    {
+
+}
+@Html.Partial("_Navbar");
+<h3>Konwersacja z //tutaj user</h3>
+<div class="list-group">
+    <h4 class="list-group-item-heading">Autor i odbiorca<span id="MessageDate">Data</span></h4>
+    <p class="list-group-item-text">Zawartość</p>
+</div>
+<!--{
+    var dict = new Dictionary<string, string>
+        {
+            {"Receiver", Model.Receiver.UserName },
+            {"Sender", Model.Sender.UserName },
+
+        };
+}
+<form method="post" asp-action="Send" asp-controller="Message" asp-all-route-data="dict" asp-antiforgery="true">
+    <div class="input-group">
+        <input asp-for="//Model.Content" type="text" class="form-control">
+        <span class="input-group-btn">
+            <button a class="btn btn-default" type="submit">Wyślij</button>
+        </span>
+    </div>
+</form>-->
