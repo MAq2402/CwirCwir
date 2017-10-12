@@ -17,8 +17,8 @@ namespace CwirCwir.DbContexts
         public DbSet<Message> Messages { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Response> Responses { get; set; }
-        public DbSet<Sharing> Sharings { get; set; }
         public DbSet<Like> Likes { get; set; }
         public DbSet<ResponseLike> ResponseLikes { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
     }
 }

@@ -12,7 +12,6 @@ namespace CwirCwir.Entities
         public Post()
         {
             Responses = new List<Response>();
-            Sharings = new List<Sharing>();
             Likes = new List<Like>();
             PostDate = DateTime.Now;
         }
@@ -23,6 +22,5 @@ namespace CwirCwir.Entities
         public User User { get; set; }
         public  DateTime PostDate { get; set; }
         public virtual List<Response> Responses { get; set; }
-        public virtual List<Sharing> Sharings { get; set; }
     }
 }

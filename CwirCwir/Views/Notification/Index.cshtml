@@ -1,0 +1,63 @@
+﻿@model CwirCwir.ViewModels.Notification.IndexViewModel
+@{ 
+    ViewBag.Title = "Powiadomienia";
+}
+@{ 
+
+}
+@Html.Partial("_Navbar");
+<ul class="list-group">
+    @foreach(var notification in Model.Notifications)
+    {
+        if (notification.NotificationType == NotificationType.Like)
+        {
+            <li class="list-group-item">Użytkownik 
+            <a asp-action="Index" asp-controller="Profile" asp-route-name="@notification.NotifyingUser.UserName">
+                <span class="glyphicon glyphicon-user" aria-hidden="true">
+
+                </span>
+                </a>
+                @notification.NotifyingUser.UserName polubił twój post
+                <a asp-action="Post" asp-controller="Home" asp-route-id="@notification.Post.Id">
+                  <span class="glyphicon glyphicon-zoom-in" aria-hidden="true">
+                 </span>
+                </a>
+                 <span style="float:right">@notification.Date</span>
+            </li>
+        }
+        else if (notification.NotificationType == NotificationType.Response)
+        {
+            <li class="list-group-item">
+                Użytkownik
+                <a asp-action="Index" asp-controller="Profile" asp-route-name="@notification.NotifyingUser.UserName">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true">
+
+                    </span>
+                </a>
+                @notification.NotifyingUser.UserName odpowiedział na twój post
+                <a asp-action="Post" asp-controller="Home" asp-route-id="@notification.Post.Id">
+                    <span class="glyphicon glyphicon-zoom-in" aria-hidden="true">
+                    </span>
+                </a>
+                <span style="float:right">@notification.Date</span>
+            </li>
+        }
+        else if (notification.NotificationType == NotificationType.LikeResponse)
+        {
+            <li class="list-group-item">
+                Użytkownik
+                <a asp-action="Index" asp-controller="Profile" asp-route-name="@notification.NotifyingUser.UserName">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true">
+
+                    </span>
+                </a>
+                @notification.NotifyingUser.UserName polubił twoją odpowiedz na ten post
+                <a asp-action="Post" asp-controller="Home" asp-route-id="@notification.Post.Id">
+                    <span class="glyphicon glyphicon-zoom-in" aria-hidden="true">
+                    </span>
+                </a>
+                <span style="float:right">@notification.Date</span>
+            </li>
+        }
+    }
+</ul>

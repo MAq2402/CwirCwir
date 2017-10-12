@@ -43,7 +43,6 @@ namespace CwirCwir.Services
             {
                 List<Post> posts = _context.Posts.Include(p => p.User)
                                                  .Include(p => p.Likes)
-                                                 .Include(p => p.Sharings)
                                                  .Include(p => p.Responses)
                                                  .OrderByDescending(p => p.PostDate)
                                                  .ToList();

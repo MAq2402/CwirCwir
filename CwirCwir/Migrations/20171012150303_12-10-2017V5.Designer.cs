@@ -12,9 +12,10 @@ using System;
 namespace CwirCwir.Migrations
 {
     [DbContext(typeof(CwirCwirDbContext))]
-    partial class CwirCwirDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171012150303_12-10-2017V5")]
+    partial class _12102017V5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,6 +68,8 @@ namespace CwirCwir.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Content");
 
                     b.Property<DateTime>("Date");
 

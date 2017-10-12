@@ -33,12 +33,18 @@ namespace CwirCwir.Controllers
 
             var user = _userService.GetUser(name);
 
+            var messages = _messageService.Messages
+                                          .Where(m => m.UserReceiver.Id == user.Id || m.UserSender.Id == user.Id)
+                                          .ToList();
+
+            messages.All(x => x.IsRead = true);
+            _ccDbContextService.Commit();
+
+
             var model = new IndexViewModel
             {
                 user = user,
-                Messages = _messageService.Messages
-                                          .Where(m=>m.UserReceiver.Id==user.Id || m.UserSender.Id==user.Id)
-                                          .ToList()
+                Messages = messages
             };
 
             return View(model);

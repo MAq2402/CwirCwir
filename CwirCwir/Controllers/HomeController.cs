@@ -22,13 +22,15 @@ namespace CwirCwir.Controllers
         private ICwirCwirDbContextService _ccDbContextService;
         private IResponseService _responseService;
         private IResponseLikeService _responseLikeService;
+        private INotificationService _notificationService;
 
         public HomeController(IPostService postService,
                                 IUserService userService,
                                 ILikeService likeService,
                                 ICwirCwirDbContextService ccDbContextService,
                                 IResponseService responseService,
-                                IResponseLikeService responseLikeService)
+                                IResponseLikeService responseLikeService,
+                                INotificationService notificationService)
         {
             _postService = postService;
             _userService = userService;
@@ -36,6 +38,7 @@ namespace CwirCwir.Controllers
             _ccDbContextService = ccDbContextService;
             _responseService = responseService;
             _responseLikeService = responseLikeService;
+            _notificationService = notificationService;
             
         }
 
@@ -145,6 +148,17 @@ namespace CwirCwir.Controllers
 
             _postService.AddLike(newLike.Post, newLike);
 
+            var newNotification = new Notification
+            {
+                NotifiedUser = post.User,
+                NotifyingUser = user,
+                NotificationType = NotificationType.Like,
+                Post = post
+                
+            };
+
+            _notificationService.AddNotification(newNotification);
+
             _ccDbContextService.Commit();
 
 
@@ -168,13 +182,26 @@ namespace CwirCwir.Controllers
 
             var newResponse = new Response();
 
+            var user = _userService.GetUser(User.Identity.Name);
+
 
             newResponse.Content = postViewModel.Content;
             newResponse.Post = post;
-            newResponse.User = _userService.GetUser(User.Identity.Name);
+            newResponse.User = user;
             newResponse = _responseService.AddResponseWithCommit(newResponse);
 
             _postService.AddResponse(post, newResponse);
+
+            var newNotification = new Notification
+            {
+                NotifiedUser = post.User,
+                NotifyingUser = user,
+                NotificationType = NotificationType.Response,
+                Post = post
+
+            };
+
+            _notificationService.AddNotification(newNotification);
 
             _ccDbContextService.Commit();
 
@@ -204,6 +231,17 @@ namespace CwirCwir.Controllers
             newLike = _responseLikeService.AddWithCommit(newLike);
 
             _responseService.AddLike(newLike.Response, newLike);
+
+            var newNotification = new Notification
+            {
+                NotifiedUser = response.User,
+                NotifyingUser = user,
+                NotificationType = NotificationType.LikeResponse,
+                Post = post
+
+            };
+
+            _notificationService.AddNotification(newNotification);
 
             _ccDbContextService.Commit();
 

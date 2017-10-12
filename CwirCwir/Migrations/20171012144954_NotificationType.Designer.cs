@@ -12,9 +12,10 @@ using System;
 namespace CwirCwir.Migrations
 {
     [DbContext(typeof(CwirCwirDbContext))]
-    partial class CwirCwirDbContextModelSnapshot : ModelSnapshot
+    [Migration("20171012144954_NotificationType")]
+    partial class NotificationType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,6 +69,8 @@ namespace CwirCwir.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("Content");
+
                     b.Property<DateTime>("Date");
 
                     b.Property<bool>("IsRead");
@@ -78,15 +81,11 @@ namespace CwirCwir.Migrations
 
                     b.Property<string>("NotifyingUserId");
 
-                    b.Property<int>("PostId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("NotifiedUserId");
 
                     b.HasIndex("NotifyingUserId");
-
-                    b.HasIndex("PostId");
 
                     b.ToTable("Notifications");
                 });
@@ -340,11 +339,6 @@ namespace CwirCwir.Migrations
                     b.HasOne("CwirCwir.Entities.User", "NotifyingUser")
                         .WithMany()
                         .HasForeignKey("NotifyingUserId");
-
-                    b.HasOne("CwirCwir.Entities.Post", "Post")
-                        .WithMany()
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CwirCwir.Entities.Post", b =>

@@ -1,7 +1,18 @@
-﻿
+﻿@inject IMessageService messageService
+@inject INotificationService notificationService
+@{ 
+    var NumberOfMessages = messageService.Messages
+                                         .Where(x => x.UserReceiver.UserName == User.Identity.Name)
+                                         .Where(x => x.IsRead == false)
+                                         .Count();
+
+    var NumberOfNotifications = notificationService.Notifications
+                                                   .Where(x => x.NotifiedUser.UserName == User.Identity.Name)
+                                                   .Where(x => x.IsRead == false)
+                                                   .Count();
+}
 <nav class="navbar navbar-default">
     <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
@@ -12,11 +23,26 @@
             <a asp-controller="Home" asp-action="Wall" class="navbar-brand">Strona Główna <span class="glyphicon glyphicon-home" aria-hidden="true"></span></a>
         </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a>Powiadomienia<span class="glyphicon glyphicon-bell" aria-hidden="true"></span></a></li>
-                <li><a asp-action="Index" asp-controller="Message" asp-route-name="@User.Identity.Name">Wiadomości<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a></li>
+                <li><a asp-action="Index" asp-controller="Notification" asp-route-name="@User.Identity.Name">Powiadomienia<span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
+                        <span>
+                            @if (NumberOfNotifications != 0)
+                            {
+                                <span>@NumberOfNotifications</span>
+                            }
+                        </span>
+                    </a>
+                </li>
+                <li><a asp-action="Index" asp-controller="Message" asp-route-name="@User.Identity.Name">Wiadomości<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                    <span>
+                       @if (NumberOfMessages!= 0)
+                       {
+                           <span>@NumberOfMessages</span>
+                       }
+                    </span>
+                    </a>
+                </li>
                 <li></li>
             </ul>
 
@@ -43,12 +69,9 @@
                         </li>
                         </ul>
                 </li>
-                
-                
-          
             </ul>
-        </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
+        </div>
+    </div>
 </nav>
 
 <style>

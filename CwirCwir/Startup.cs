@@ -47,6 +47,7 @@ namespace CwirCwir
             services.AddScoped<IResponseLikeService, ResponseLikeService>();
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<ICwirCwirDbContextService, CwirCwirDbContextService>();
+            services.AddScoped<INotificationService, NotificationService>();
             services.AddDbContext<CwirCwirDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("CwirCwir")));
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<CwirCwirDbContext>();
         }

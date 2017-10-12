@@ -15,6 +15,7 @@ namespace CwirCwir.Entities
             Posts = new List<Post>();
             ReceivedMessages = new List<Message>();
             SentMessages = new List<Message>();
+            Notifications = new List<Notification>();
         }
         
         public virtual List<Post> Posts { get; set; }
@@ -22,5 +23,7 @@ namespace CwirCwir.Entities
         public virtual List<Message> ReceivedMessages { get; set; }
         [InverseProperty("UserSender")]
         public virtual List<Message> SentMessages { get; set; }
+        [InverseProperty("NotifiedUser")]
+        public virtual List<Notification> Notifications { get; set; }
     }
 }
